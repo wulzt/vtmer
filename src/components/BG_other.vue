@@ -41,5 +41,5 @@
 <script>
   // import bg from '../assets/js/bg.js'
 </script>
-<style src="../assets/css/bg.css" scoped>
+<style src="../assets/css/bg_other.css" scoped>
 </style>
