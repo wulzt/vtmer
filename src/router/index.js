@@ -1,10 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '../components/Home'
-import Works from '../components/Works'
-import Join from '../components/Join'
-import Admin from '../components/Admin'
-import Upload from '../components/Upload'
+
+const Home = () => import('../components/Home')
+const Works = () => import('../components/Works')
+const Join = () => import('../components/Join')
+const Admin = () => import('../components/Admin')
+const Upload = () => import('../components/Upload')
+const Interview = () => import('../components/Interview')
+const CheckIn = () => import('../components/CheckIn')
+const WaitNumber = () => import('../components/WaitNumber')
 
 Vue.use(Router)
 
@@ -34,7 +38,22 @@ export default new Router({
       path:'/upload',
       name:'upload',
       component:Upload
-    }
+    },
+    {
+      path:'/interview',
+      name:'interview',
+      component:Interview
+    },
+    {
+      path:'/checkIn',
+      name:'checkIn',
+      component:CheckIn
+    },
+    {
+      path:'/waitNumber',
+      name:'waitNumber',
+      component:WaitNumber
+    },
 
   ]
 })
