@@ -10,17 +10,43 @@
         <img :src="item.img"/>
         <div class="workCon">
           <p>
-            作品的标题长长的标题可以长到这里的标题
+            {{item.name}}
           </p>
           <input id="editWo" name="editWo" type="button" value="编辑" @click="editWo">
-          <input id="deleteWo" name="deleteWo" type="button" value="删除" @click="deleteWo">
+          <input id="deleteWo" name="deleteWo" type="button" value="删除" @click="isDelete=true">
         </div>
       </li>
     </ul>
+    <div class="deleteBox" v-if="isDelete">
+      <div class="mask"></div>
+      <div class="deleteAlert">
+        <div class="close" @click="isDelete=false">
+          <img src="../assets/img/home/close.png" />
+        </div>
+        <div class="deleteContent">
+          <p>
+            是否删除作品
+          </p>
+          <p>
+            "{{worksList[0].name}}"
+          </p>
+          <div class="deleteBTN">
+            <div class="deleteYes">
+              删除
+            </div>
+            <div class="deleteNo" @click="isDelete=false">
+              取消
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 <script>
 import Head from './Head'
+import store from '../store/store'
   export default{
     name: 'admin',
     components:{
@@ -28,13 +54,16 @@ import Head from './Head'
     },
     data(){
       return{
+        isDelete:false,
         worksList:[
-          {img:require('../assets/img/worker/banner1.jpg')},
-          {img:require('../assets/img/worker/banner2.jpg')},
-          {img:require('../assets/img/worker/banner3.jpg')},
-          {img:require('../assets/img/worker/banner4.jpg')},
+          {name:'这是标题长长的标题大概这么长',img:require('../assets/img/administrate/show1.png')},
+          {name:'这是标题长长的标题大概这么长',img:require('../assets/img/administrate/show2.png')},
+          {name:'这是标题长长的标题大概这么长',img:require('../assets/img/administrate/show3.png')},
         ],
       }
+    },
+    created(){
+      store.state.whatBg=false;
     },
     methods:{
       upload(){
@@ -53,8 +82,9 @@ import Head from './Head'
     }
   }
 </script>
-<style>
+<style scoped>
 .welcome{
+  font-family: MSYHL;
   display: flex;
   justify-content: space-between;
   width: 5.74rem;
@@ -64,7 +94,6 @@ import Head from './Head'
 }
 .welcome span{
   font-size: 0.36rem;
-  font-family: "MicrosoftYaHeiLight";
   color: rgb(153, 153, 153);
 }
 .uploadWorks{
@@ -73,6 +102,7 @@ import Head from './Head'
   border: solid 0.02rem rgb(55, 140, 255);
   border-radius: 0.21rem;
   font-size: 0.24rem;
+  font-family: MSYHL;
   text-align: center;
   color: #378cff;
   background-color: transparent;
@@ -109,6 +139,7 @@ import Head from './Head'
     margin-left: .63rem;
     position: absolute;
     bottom: 0;
+    font-family: MSYHL;
 }
 #deleteWo{
     font-size: 0.24rem;
@@ -121,5 +152,73 @@ import Head from './Head'
     margin-left: 2.36rem;
     position: absolute;
     bottom:0;
+    font-family: MSYHL;
+}
+.mask{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  background: black;
+  opacity: 0.4;
+}
+.deleteAlert{
+  width: 6.05rem;
+  height: 4.92rem;
+  border-radius: 0.24rem;
+  background-color: rgb(255, 255, 255);
+  position: absolute;
+  top: 22.76%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 11;
+}
+.deleteContent p:first-child{
+  font-size: 0.48rem;
+  color:#f36a6a;
+  margin-top: 1.25rem;
+  margin-left: .78rem;
+  margin-bottom: .45rem;
+}
+.deleteContent p:last-of-type{
+  margin-left: .78rem;
+  padding-right: .8rem;
+  font-size: .36rem;
+  color: #999;
+}
+.deleteYes,.deleteNo{
+  font-size: .3rem;
+  width: 1.55rem;
+  line-height: .46rem;
+  text-align: center;
+  border-radius: .22rem;
+}
+.deleteYes{
+  background-color: #ff5c64;
+  border: solid .03rem #ff5c64;
+  color: #fff;
+}
+.deleteNo{
+  border: solid .03rem #808080;
+  color: #808080;
+}
+.close{
+  position: absolute;
+  top: 0.28rem;
+  right: 0.28rem;
+  font-size: 0;
+}
+.close img{
+  width: 0.35rem;
+  height: 0.35rem;
+}
+.deleteBTN{
+  width: 3.84rem;
+  margin: 0 auto;
+  margin-top: .5rem;
+  display: flex;
+  justify-content: space-between;
 }
 </style>

@@ -36,6 +36,7 @@
     display: flex;
     justify-content: center;
     font-size: 0;
+    font-family: MSYHL;
 }
 
 .content-center img {
@@ -160,14 +161,19 @@
   font-size: 0;
   text-align: center;
 }
+
 .alertBoxContent>p{
-  font-size: 0.36rem;
+  font-size: 0.42rem;
   font-family: "FZZHJW";
   color: rgb(140, 151, 165);
   margin-top: 0.52rem;
   margin-bottom: 0.23rem;
 }
+.loginForm{
+  font-family: MSYHL;
+}
 #useremail, #psw {
+    font-family: MSYHL;
     width: 3.86rem;
     height: 0.8rem;
     font-size: 0.28rem;

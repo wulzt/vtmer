@@ -20,6 +20,18 @@ export default {
 </script>
 
 <style>
+@font-face {
+  font-family: "FZZHJW";
+  src: url('/src/assets/fonts/FZZHJW.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "MSYHL";
+  src: url('/src/assets/fonts/MicrosoftYaHeiLight.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
 html{
   font-size: 13.33333333333vw;
 }
@@ -34,7 +46,8 @@ html, body {
 }
 
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: Microsoft YaHei,'Avenir', Helvetica, Arial, sans-serif;
+  font-weight: 300;
 }
 
 a{
