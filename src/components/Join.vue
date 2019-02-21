@@ -76,7 +76,7 @@
                 </div>
                 <div class="mainForm-content-baseMsg">
 
-                  <el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign" id="FupForm">
+                  <el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign" id="FupForm" status-icon :rules="rules" ref="labelPosition">
 
                     <el-row :gutter="20" style="margin-bottom: 10px">
                       <el-col :span="10">
@@ -102,7 +102,7 @@
                     <el-form-item label="*学院专业">
                       <el-input v-model="formLabelAlign.major" id="Usercollege" form='FupForm' name="major"></el-input>
                     </el-form-item>
-                    <el-form-item label="*联系方式">
+                    <el-form-item label="*联系方式"  prop="contact">
                       <el-input v-model="formLabelAlign.contact" id="Usernumber" form='FupForm' name="contact"></el-input>
                     </el-form-item>
                     <el-form-item label="记得上传你的专属头像"></el-form-item>
@@ -191,6 +191,19 @@
   export default {
 
     data() {
+      var checkPhone = (rule, value, callback) => {
+        if (!value) {
+          return callback(new Error('手机号不能为空'));
+        } else {
+          const reg = /^1[3|4|5|7|8][0-9]\d{8}$/
+          console.log(reg.test(value));
+          if (reg.test(value)) {
+            callback();
+          } else {
+            return callback(new Error('请输入正确的手机号'));
+          }
+        }
+      };
       return {
         imageUrl:'',
         labelPosition: 'top',
@@ -201,6 +214,12 @@
           contact: '',
           group: '',
         },
+        rules: {
+          contact: [
+            {validator: checkPhone, trigger: 'blur'}
+          ]
+        }
+
         /*groupList:[
           "前端组",
           "后台组",
