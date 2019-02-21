@@ -10,7 +10,15 @@
           <img src="../assets/img/apply/headbg.png" alt="headbg" />
           <img src="../assets/img/apply/headqinyuan.png" height="640" width="640" alt="userimg" id="userimg" />
           <img src="../assets/img/apply/camera.png" height="62" width="62" alt="camera" id="camera"/>
-          <input type="file" name="avatar" id='upImg' accept="image/*" form="FupForm">
+          <!--<input type="file" name="avatar" id='upImg' accept="image/*" form="FupForm">-->
+          <el-upload form="FupForm" id='upImg' name="avatar"
+          class="avatar-uploader"
+          action="https://vtmer.erienniu.xyz/api/sign"
+          :show-file-list="false"
+          :on-change="imgPreview"
+          :auto-upload="false">
+            <img v-if="imageUrl" :src="imageUrl" class="avatar">
+          </el-upload>
         </div>
 
         <div class="mainForm">
@@ -184,6 +192,7 @@
 
     data() {
       return {
+        imageUrl:'',
         labelPosition: 'top',
         formLabelAlign: {
           name:'',
@@ -201,10 +210,17 @@
       };
     },
     methods:{
+      imgPreview(file){
+        const isLt2M = file.size / 1024 / 1024 < 2;
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 2MB!');
+        }
+        this.file = file.raw;
+        this.imageUrl = URL.createObjectURL(file.raw);
+      },
       chooseGroup(myev) {
         //myev.preventDefault();
         var i = myev.currentTarget.id;
-        //console.log(i);
         //nav选中状态的切换
         $(this).addClass('active').siblings().removeClass('active');
         //已选中的div动态进入
@@ -214,8 +230,6 @@
           'background': 'rgb(51, 208, 102)',
           'border': '1px solid rgb(51, 208, 102)'
         }).removeAttr('disabled', "false");
-        // document.getElementsByClassName("next")[0].disabled = false;
-       // console.log($('.next').removeAttribute(disabled));
         $('.groupChoiceMsg').html('');
         //} else {
         /*$('.next').css({
@@ -351,10 +365,10 @@
     $('.LoadingWrap').fadeIn();
     var UpData = new FormData(document.getElementById('FupForm')),
       oChoiceGroup = document.getElementsByClassName('active')[0].getAttribute("group");
-      console.log(oChoiceGroup);
 
     UpData.append("group", oChoiceGroup);
     UpData.append("gender", this.formLabelAlign.gender);
+    UpData.append("avatar",this.file);
     //let updata2 = new FormData();
 
         /*Axios.post('https://vtmer.erienniu.xyz/api/sign',
@@ -371,14 +385,24 @@
             'Content-Type': 'multipart/form-data'
           }
         })
-          .then(function (response) {
-            console.log(response);
+          .then(function (res) {
+            console.log(res.data + ':' + res.code);
+            if(res.code == 5001){
+              this.repeatedAlert();
+              document.getElementById('FupForm').reset();
+            }else {
+              document.getElementById('FupForm').reset();
+            }
+            $('.LoadingWrap').fadeOut();
           })
           .catch(function (error) {
-            console.log(error);
+            console.log(error.data + ":" + error.code);
+            this.tryAlert();
+            console.log(err);
+            $('.LoadingWrap').fadeOut();
           });
     //Ajax
-    $.ajax({
+    /*$.ajax({
       url: 'https://vtmer.erienniu.xyz/api/sign',
       type: 'POST',
       data: UpData,
@@ -389,16 +413,16 @@
         if (data.code == 5001) {
           this.repeatedAlert();
           document.getElementById('FupForm').reset();
-          /*$('#userimg').attr('src', 'img/apply/camera.png');
+          /!*$('#userimg').attr('src', 'img/apply/camera.png');
           this.myRemoveSwitch(1);
-          this.myRemoveSwitch(0);*/
+          this.myRemoveSwitch(0);*!/
         } else {
           //this.conpeletedAlert();
           document.getElementById('FupForm').reset();
-          /*$('#userimg').attr('src', 'img/apply/camera.png');*/
-          /*this.myRemoveSwitch(1);
+          /!*$('#userimg').attr('src', 'img/apply/camera.png');*!/
+          /!*this.myRemoveSwitch(1);
           this.myRemoveSwitch(0);
-*/
+*!/
         }
         $('.LoadingWrap').fadeOut();
       },
@@ -407,7 +431,7 @@
         console.log(err);
         $('.LoadingWrap').fadeOut();
       }
-    });
+    });*/
   }
     }
   }
@@ -430,6 +454,27 @@
   .el-col {
     border-radius: 4px;
   }
+  /*照片选择*/
+  .avatar-uploader .el-upload {
+   cursor: pointer;
+   overflow: hidden;
+
+   width: 2.16rem;
+   height: 2.16rem;
+   border-radius: 50%;
+   position: absolute;
+   z-index: 4;
+ }
+ .avatar {
+   width: 1.88rem;
+   height: 1.88rem;
+   position: absolute;
+   border-radius: 50%;
+   z-index: 2;
+   left: 50%;
+   top: 50%;
+   margin: -0.94rem 0 0 -0.94rem;
+ }
 /*组别选择*/
   .choice-buttons {
     display: flex;

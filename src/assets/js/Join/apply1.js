@@ -92,12 +92,12 @@ $(document).ready(function() {
         //}
     });
     /*上传图片本地预览*/
-    $('#upImg').change(function() {
+    /*$('#upImg').change(function() {
         oUpImgInpt = document.getElementById('upImg').files[0];
         var oImgsrc = window.URL.createObjectURL(oUpImgInpt);
         $('#userimg').attr('src', oImgsrc);
         $('#camera').remove();
-    });
+    });*/
     /*报名成功弹窗*/
     /*function conpeletedAlert() {
         $('body').append('<div id="mask"></div>').append(' <div id="completedAlert"class="moveIn "><img src="img/关闭.png" alt="关闭按钮" id="close1"/><div class="completedAlertContent"><p >提交成功<br />我们期待你的加入</p><div class="completedAlertBtns"><input type="button" class="zhuyeBtn" value="确定" /></div></div></div>');
@@ -193,7 +193,13 @@ $(document).ready(function() {
            $('#Usernumber').parent().find("span").removeClass('red');
         }
     */
-        if (($.trim($('#Username').val()) !== "") && ($.trim($('#Usercollege').val()) !== "") && ($.trim($('#Usernumber').val()) !== "")) {
+      if ($('.menu-active').length == 1){
+        if(document.getElementsByClassName("active").length !== 0){
+          $('.next').removeAttr('disabled', "true");
+        }else {
+          $('.next').attr('disabled', "true");
+        }
+      }else if (($.trim($('#Username').val()) !== "") && ($.trim($('#Usercollege').val()) !== "") && ($.trim($('#Usernumber').val()) !== "")) {
             $('.next').removeAttr('disabled', "true");
         } else {
             $('.next').attr('disabled', "true");
