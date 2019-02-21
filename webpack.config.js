@@ -36,7 +36,11 @@ module.exports = {
         options: {
           name: '[name].[ext]?[hash]'
         }
-      }
+      },
+      {
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        loader: 'file-loader'
+      },
     ]
   },
   resolve: {
@@ -48,7 +52,17 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
     noInfo: true,
-    overlay: true
+    overlay: true,
+    port: 80,
+    host: 'localhost',
+    disableHostCheck: true,
+    // proxy: {
+    //   '/api/*': {//匹配根路径
+    //     target: 'http://192.168.x.xxx:xxxx',//跨域要访问的地址及端口
+    //     changeOrigin: true,
+    //     secure: false,
+    //   }
+    // }
   },
   performance: {
     hints: false
@@ -73,6 +87,6 @@ if (process.env.NODE_ENV === 'production') {
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: true
-    })
+    }),
   ])
 }

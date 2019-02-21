@@ -12,6 +12,7 @@
           <img src="../assets/img/apply/camera.png" height="62" width="62" alt="camera" id="camera"/>
           <input type="file" name="avatar" id='upImg' accept="image/*" form="FupForm">
         </div>
+
         <div class="mainForm">
           <div class="mainForm-content">
             <div class="mainForm-content-menu">
@@ -32,13 +33,21 @@
               <div class="banner-list" >
                 <div class="mainForm-content-groupChoice" >
                   <div>
-                    <p>请选择组别<span class="groupChoiceMsg"> (现不招运营组)</span></p>
-                    <div class="choice-buttons">
-                      <input type="button" value="前端组" class="active choice-button" />
-                      <input type="button" value="后台组" class=" choice-button" />
-                      <input type="button" value="设计组" class=" choice-button" />
-                      <input type="button" value="运营组" class=" choice-button"  />
+                    <p>请选择你想加入的组别</p><!--<span class="groupChoiceMsg"> (现不招运营组)</span>-->
+                    <div class="choice-buttons" v-model="formLabelAlign.group">
+                      <input type="button" value="前端组" class=" choice-button" group="1"/>
+                      <input type="button" value="后台组" class=" choice-button" group="2"/>
+                      <input type="button" value="设计组" class=" choice-button" group="3"/>
+                      <input type="button" value="运营组" class=" choice-button" group="4"/>
                     </div>
+                    <!--<el-radio-group v-model="formLabelAlign.group" class="choice-buttons">
+                      &lt;!&ndash;<el-radio-button label="1" class="choice-button" @click.native="chooseGroup($event)">前端组</el-radio-button>
+                      <el-radio-button label="2" class="choice-button" @click.native="chooseGroup($event)">后台组</el-radio-button>
+                      <el-radio-button label="3" class="choice-button" @click.native="chooseGroup($event)">设计组</el-radio-button>
+                      <el-radio-button label="4" class="choice-button" @click.native="chooseGroup($event)">运营组</el-radio-button>&ndash;&gt;
+                      &lt;!&ndash;<el-radio-button v-for="(index,item)in groupList" :label="index" class="choice-button" @click.native="chooseGroup($event)">{{item.message}}</el-radio-button>&ndash;&gt;
+                      &lt;!&ndash;<el-radio-button v-for="(item,index) in groupList"  :label="index" :id="index" class="choice-button" @click.native.prevent="chooseGroup($event)">{{item}}</el-radio-button>&ndash;&gt;
+                    </el-radio-group>-->
                     <div class="choice-introduce">
                       <div class="choice-introduce-active"><p> 通过html，css，javascript以及衍生出来的各种库（jQuery/bootstrap/animate）、框架（AngularJS/vue.js/React.js）、解决方案来实现互联网产品的用户界面交互。<br>致力于为用户呈现更优美的页面，更流畅的交互。
                         <br>......还有，在前台给UI和后台端茶递水。 
@@ -56,37 +65,56 @@
                       </p></div>
                     </div>
                   </div>
-
                 </div>
                 <div class="mainForm-content-baseMsg">
-                  <form name="FupForm" id='FupForm' class="baseMsgForm">
-                    <div>
-                      <p><span class="star">∗</span>姓名</p>
-                      <input type="text" id="Username" name='name'/>
-                    </div>
-                    <div>
-                      <p><span class="star">∗</span>学院专业</p>
-                      <input type="text" id="Usercollege" name='academy' />
-                    </div>
-                    <div>
-                      <p><span class="star">∗</span>联系方式</p>
-                      <input type="text" id="Usernumber" name="phone" />
-                    </div>
-                  </form>
+
+                  <el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign" id="FupForm">
+
+                    <el-row :gutter="20" style="margin-bottom: 10px">
+                      <el-col :span="10">
+                        <el-form-item label="*姓名">
+                          <el-input v-model="formLabelAlign.name" id="Username"  form='FupForm' name="name"></el-input>
+                        </el-form-item>
+                      </el-col>
+                      <el-col class="line" :span="2"></el-col>
+                      <el-col :span="10">
+                        <el-form-item label="*性别">
+                          <el-radio-group v-model="formLabelAlign.gender" id="UserSex">
+                            <el-radio label="1">
+                              <i class="iconfont icon-girl"></i>
+                            </el-radio>
+                            <el-radio label="2">
+                              <i class="iconfont icon-boy"></i>
+                            </el-radio>
+                          </el-radio-group>
+                        </el-form-item>
+                      </el-col>
+                    </el-row>
+
+                    <el-form-item label="*学院专业">
+                      <el-input v-model="formLabelAlign.major" id="Usercollege" form='FupForm' name="major"></el-input>
+                    </el-form-item>
+                    <el-form-item label="*联系方式">
+                      <el-input v-model="formLabelAlign.contact" id="Usernumber" form='FupForm' name="contact"></el-input>
+                    </el-form-item>
+                    <el-form-item label="记得上传你的专属头像"></el-form-item>
+
+                  </el-form>
+
 
                 </div>
                 <div class="mainForm-content-detailMsg">
                   <div>
                     <p>个人简介</p>
-                    <textarea id="signupBrief" placeholder="请在此输入简介" form='FupForm' name="intro"></textarea>
+                    <textarea id="signupBrief" placeholder="请在此输入简介" form='FupForm' name="description"></textarea>
                     <p>个人经历</p>
-                    <textarea id="signupBrief" placeholder="请在此输入经历" form="FupForm" name="exper"></textarea>
+                    <textarea id="signupBrief" placeholder="请在此输入经历" form="FupForm" name="experience"></textarea>
                   </div>
                 </div>
               </div>
             </div>
-            <input type="button" value="上一步"  class="previous"/>
-            <input type="button" value="下一步" class="next" disabled />
+            <input type="button" value="上一步"  class="previous" @click="previousStep"/>
+            <input type="button" value="下一步" class="next" @click="nextStep" disabled/>
           </div>
         </div>
       </div>
@@ -142,16 +170,352 @@
     </div>
   </div>
 </template>
-<style scoped>
-  @import '../assets/css/Join/apply.css';
-  @import '../assets/css/Join/bg.css';
-  @import '../assets/css/Join/swiper-3.4.2.min.css';
-  /*@import '../assets/img/vtmerLogin.ico';*/
 
-</style>
+
 <script>
   import '../assets/js/jq.min';
   import '../assets/js/jquery.parallax.min';
   import '../assets/js/Join/apply1';
+  import '../assets/css/Join/icon/iconfont.css'
+  import 'element-ui/lib/theme-chalk/index.css';
+  import '../assets/css/Join/apply.css';
+  import Axios from "axios"
+  export default {
+
+    data() {
+      return {
+        labelPosition: 'top',
+        formLabelAlign: {
+          name:'',
+          gender:'',
+          major: '',
+          contact: '',
+          group: '',
+        },
+        /*groupList:[
+          "前端组",
+          "后台组",
+          "设计组",
+          "运营组",
+        ],*/
+      };
+    },
+    methods:{
+      chooseGroup(myev) {
+        //myev.preventDefault();
+        var i = myev.currentTarget.id;
+        //console.log(i);
+        //nav选中状态的切换
+        $(this).addClass('active').siblings().removeClass('active');
+        //已选中的div动态进入
+        $(".choice-introduce>div").addClass('choice-introduce-active').eq(i).siblings().removeClass('choice-introduce-active');
+        //if (i !== 0) {
+        $('.next').css({
+          'background': 'rgb(51, 208, 102)',
+          'border': '1px solid rgb(51, 208, 102)'
+        }).removeAttr('disabled', "false");
+        // document.getElementsByClassName("next")[0].disabled = false;
+       // console.log($('.next').removeAttribute(disabled));
+        $('.groupChoiceMsg').html('');
+        //} else {
+        /*$('.next').css({
+        'background': 'rgba(153, 153, 153, 0.8)',
+        'border': '1px solid rgba(153, 153, 153, 0.8)'
+    }).attr('disabled', "true");*/
+        //$('.groupChoiceMsg').html(' (现不招' + this.value + ')');
+        //}
+      },
+      myAddSwitch(i) {
+    $('.menu-symbol').eq(i).addClass('menu-active');
+    $('.menu-text').eq(i + 1).addClass('menu-active');
+    $('.menu-number').eq(i + 1).addClass('menu-number-active');
+    $(".banner-list").animate({
+      left: '-=6.56rem'
+    }, "fast");
+  },
+      myRemoveSwitch(i) {
+        $('.menu-symbol').eq(i).removeClass('menu-active');
+        $('.menu-text').eq(i + 1).removeClass('menu-active');
+        $('.menu-number').eq(i + 1).removeClass('menu-number-active');
+        $(".banner-list").animate({
+          left: '+=6.56rem'
+        }, "fast");
+      },
+      conpeletedAlert() {
+        $('body').append('<div id="mask"></div>').append(' <div id="completedAlert"class="moveIn "><img src="img/关闭.png" alt="关闭按钮" id="close1"/><div class="completedAlertContent"><p >提交成功<br />我们期待你的加入</p><div class="completedAlertBtns"><input type="button" class="zhuyeBtn" value="确定" /></div></div></div>');
+        $('#close1').click(function(event) {
+          $(this).parent().siblings('#mask').remove();
+          $(this).parent().remove();
+        });
+        /* $('.cancleBtn').click(function(event) {
+            $(this).parent().parent().parent().siblings('#mask').remove();
+            $(this).parent().parent().parent().remove();
+        });*/
+        $('.zhuyeBtn').click(function(event) {
+          window.open('index.html', '_self');
+          $(this).parent().parent().parent().siblings('#mask').remove();
+          $(this).parent().parent().parent().remove();
+        });
+      },
+      repeatedAlert() {
+        $('body').append('<div id="mask"></div>').append(' <div class="repeatedAlert moveIn"><img src="img/关闭.png" alt="关闭按钮" id="close2"/><div class="repeatedAlertContent"><p >重复提交<br />请耐心等待面试通知</p><div class="repeatedAlertBtns"><input type="button" class="zhuyeBtn2" value="主页" /></div></div></div>');
+        $('#close2').click(function(event) {
+          $(this).parent().siblings('#mask').remove();
+          $(this).parent().remove();
+        });
+        $('.cancleBtn2').click(function(event) {
+          $(this).parent().parent().parent().siblings('#mask').remove();
+          $(this).parent().parent().parent().remove();
+        });
+        $('.zhuyeBtn2').click(function(event) {
+          window.open('index.html', '_self');
+          $(this).parent().parent().parent().siblings('#mask').remove();
+          $(this).parent().parent().parent().remove();
+        });
+      },
+      tryAlert() {
+        $('body').append('<div id="mask"></div>').append(' <div class="repeatedAlert moveIn"><img src="img/关闭.png" alt="关闭按钮" id="close2"/><div class="repeatedAlertContent"><p >诶？有点小问题<br />请重新试试吧</p><div class="repeatedAlertBtns"><input type="button" class="repeatBtn" value="重试" /><input type="button" class="cancleBtn2" value="返回" /></div></div></div>');
+        $('#close2').click(function(event) {
+          $(this).parent().siblings('#mask').remove();
+          $(this).parent().remove();
+        });
+        $('.cancleBtn2').click(function(event) {
+          $(this).parent().parent().parent().siblings('#mask').remove();
+          $(this).parent().parent().parent().remove();
+        });
+        $('.repeatBtn').click(function(event) {
+          $(this).parent().parent().parent().siblings('#mask').remove();
+          $(this).parent().parent().parent().remove();
+          this.myAjax();
+        });
+      },
+      phoneAlert() {
+        $('body').append('<div id="mask"></div>').append(' <div class="repeatedAlert moveIn"><img src="img/关闭.png" alt="关闭按钮" id="close2"/><div class="repeatedAlertContent"><p >手机号码有误<br />请再仔细检查一下吧</p><div class="repeatedAlertBtns"><input type="button" class="repeatBtn" value="好的" /><input type="button" class="cancleBtn2" value="返回" /></div></div></div>');
+        $('#close2').click(function(event) {
+          $(this).parent().siblings('#mask').remove();
+          $(this).parent().remove();
+        });
+        $('.cancleBtn2').click(function(event) {
+          $(this).parent().parent().parent().siblings('#mask').remove();
+          $(this).parent().parent().parent().remove();
+        });
+
+        $('.repeatBtn').click(function(event) {
+          $(this).parent().parent().parent().siblings('#mask').remove();
+          $(this).parent().parent().parent().remove();
+          myRemoveSwitch(1);
+          $('.next').attr({
+            'value': '下一步',
+          }).removeAttr("id");
+        });
+      },
+      nextStep(){
+          if ($('.menu-active').length == 1) {
+            this.myAddSwitch(0);
+            $('.previous').css({
+              display: 'block'
+            });
+            $('.next').attr('disabled', "true");
+            //判断当前为组别选择
+          } else if ($('.menu-active').length == 3) {
+            this.myAddSwitch(1);
+            $(".next").attr({
+              'value': '完成',
+              'id': 'completed'
+            });
+            //判断当前为基本内容
+          } else if ($('.menu-active').length == 5) {
+            if (reg.test($.trim($('#Usernumber').val())) == false) {
+              this.phoneAlert();
+
+            } else {
+              this.myAjax();
+            }
+          }
+        },
+      previousStep(){
+      if ($('.menu-active').length == 5) {
+        this.myRemoveSwitch(1);
+        $('.next').attr({
+          'value': '下一步',
+        }).removeAttr("id"); //判断当前为详细信息
+      } else if ($('.menu-active').length == 3) {
+        this.myRemoveSwitch(0);
+        $(".previous").css({
+          display: 'none'
+        }); //判断当前为基本内容
+        $('.next').removeAttr('disabled', "true");
+      }
+    },
+      myAjax() {
+    $('.LoadingWrap').fadeIn();
+    var UpData = new FormData(document.getElementById('FupForm')),
+      oChoiceGroup = document.getElementsByClassName('active')[0].getAttribute("group");
+      console.log(oChoiceGroup);
+
+    UpData.append("group", oChoiceGroup);
+    UpData.append("gender", this.formLabelAlign.gender);
+    //let updata2 = new FormData();
+
+        /*Axios.post('https://vtmer.erienniu.xyz/api/sign',
+          {
+              UpData
+          })
+          .then(function(res){
+            console.log(res);
+          }).catch(function(err){
+          console.log(err);
+        });*/
+        Axios.post('https://vtmer.erienniu.xyz/api/sign', UpData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+    //Ajax
+    $.ajax({
+      url: 'https://vtmer.erienniu.xyz/api/sign',
+      type: 'POST',
+      data: UpData,
+      contentType: false,
+      processData: false,
+      success: function(data, status) {
+        console.log(data + ':' + data.code);
+        if (data.code == 5001) {
+          this.repeatedAlert();
+          document.getElementById('FupForm').reset();
+          /*$('#userimg').attr('src', 'img/apply/camera.png');
+          this.myRemoveSwitch(1);
+          this.myRemoveSwitch(0);*/
+        } else {
+          //this.conpeletedAlert();
+          document.getElementById('FupForm').reset();
+          /*$('#userimg').attr('src', 'img/apply/camera.png');*/
+          /*this.myRemoveSwitch(1);
+          this.myRemoveSwitch(0);
+*/
+        }
+        $('.LoadingWrap').fadeOut();
+      },
+      fail: function(err, status) {
+        this.tryAlert();
+        console.log(err);
+        $('.LoadingWrap').fadeOut();
+      }
+    });
+  }
+    }
+  }
+  var reg = /^1[3|4|5|7|8][0-9]{9}$/;
 
 </script>
+
+<style lang="less">
+
+  @import '../assets/css/Join/bg.css';
+  @import '../assets/css/Join/swiper-3.4.2.min.css';
+
+  /*@import '../assets/img/vtmerLogin.ico';*/
+  .el-row {
+    margin-bottom: 20px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  .el-col {
+    border-radius: 4px;
+  }
+/*组别选择*/
+  .choice-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.533333rem;
+  }
+  .el-radio-button{
+    margin: 0;
+    padding: 0;
+    .el-radio-button__orig-radio:checked+.el-radio-button__inner{
+      color:#fff;
+      background-color: rgb(118,178,253);
+      border: 0.013333rem solid rgb(118, 178, 253);
+      box-shadow: none;
+    }
+    .el-radio-button__orig-radio{
+      box-shadow: none;
+    }
+    .el-radio-button__inner{
+      border: 0.013333rem solid rgb(118, 178, 253);
+      border-left: 0.013333rem solid rgb(118, 178, 253);
+      border-radius: 0.333333rem;
+      width: 1.333333rem;
+      height: 0.533333rem;
+      text-align: center;
+      line-height: 0.533333rem;
+      padding: 0;
+      color: rgb(118,178,253);
+      box-shadow: none;
+    }
+
+  }
+  .el-radio-button:first-child .el-radio-button__inner{
+    border-radius: 0.333333rem;
+  }
+  .el-radio-button:last-child .el-radio-button__inner{
+    border-radius: 0.333333rem;
+  }
+
+/*表单*/
+  .el-form{
+    width: 6.186667rem;
+    margin: 0 auto;
+    height: 5.706667rem;
+  }
+  .el-form-item{
+    margin-top: -0.4rem;
+    margin-bottom: -0.15rem;
+  }
+  .el-form-item:first-child{
+    margin-top: -0.3rem;
+  }
+  .el-form-item__label{
+    color: #898989 !important;
+    font-size: 0.28rem;
+    margin-bottom:-0.5rem;
+  }
+  .el-radio__inner{
+    border: 2px solid rgb(197,197,197) !important;
+  }
+  .el-radio__input.is-checked .el-radio__inner{
+    background-color: white !important;
+    border-color: rgb(197,197,197) !important;
+  }
+  .el-radio__inner:after{
+    background-color: #000 !important;
+  }
+  .el-radio:first-child i{
+    color: rgb(255,122,185);
+  }
+  .el-radio:last-child i{
+    color: rgb(118,178,253);
+  }
+  .iconfont {
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .icon-i-girl:before {
+    content: "\e936";
+  }
+
+  .icon-boy:before {
+    content: "\e7bb";
+  }
+</style>

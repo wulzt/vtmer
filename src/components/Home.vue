@@ -18,7 +18,7 @@
   </div>
 
 </template>
-<style>
+<style >
 @import "../assets/css/homepage.css";
 
 </style>
