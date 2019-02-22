@@ -8,7 +8,7 @@
       </div>
       <div class="content-center">
           <img alt="bigVtmLogo" src="../assets/img/home/SLOGAN.png"/>
-          <div class="content-BTNlogin">
+          <div class="content-BTNlogin" @click="changeBg">
               <router-link :to="{ name: 'works' }" id="openBtn">打开作品</router-link>
           </div>
           <div class="content-BTNsignup">
@@ -95,7 +95,11 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
           .catch((error) => {
             this.loginFalse = true
           });
+      },
+      changeBg(){
+        store.state.whatBg=false
       }
+
     }
   }
 </script>

@@ -4,6 +4,7 @@ import Router from 'vue-router'
 const Home = () => import('../components/Home')
 const Works = () => import('../components/Works')
 const Join = () => import('../components/Join')
+const Touch = () => import('../components/Touch')
 const Admin = () => import('../components/Admin')
 const Upload = () => import('../components/Upload')
 const Interview = () => import('../components/Interview')
@@ -23,6 +24,11 @@ export default new Router({
       path:'/works',
       name:'works',
       component:Works
+    },
+    {
+      path:'/touch',
+      name:'touch',
+      component:Touch
     },
     {
       path:'/join',

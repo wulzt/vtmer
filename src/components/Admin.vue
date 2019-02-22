@@ -93,6 +93,7 @@ import store from '../store/store'
         this.axios.get('https://vtmer.erienniu.xyz/api/delete/'+this.deleteId)
           .then(res => {
             // 成功回调
+            console.log(res);
             this.isDelete=false
             this.reload()
           }, res => {
