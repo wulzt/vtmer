@@ -86,11 +86,14 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
         })
           .then((res) => {
             // session.setAttribute("user", obj);
-            console.log(res);
-            setCookie('username',this.username,1000*60)
-            this.$router.push({
-              path:'/admin',
-            })
+            if(res.data.status==200){
+              setCookie('username',this.username,1000*60)
+              this.$router.push({
+                path:'/admin',
+              })
+            }else{
+              this.loginFalse = true
+            }
           })
           .catch((error) => {
             this.loginFalse = true

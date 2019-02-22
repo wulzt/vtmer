@@ -2,36 +2,44 @@
 	<div id="touch">
 		<Head></Head>
 		<ul>
-			<li v-for="item in list">
+			<li v-for="(item,index) in list" :key='index'>
 				<div class="linkmans">
 					<div class="linkmanItr">
-		             	<img src="../assets/img/touch/Mr1.png">
-		             	<div class="name">
-		                 	<span class='chinesename'>负责人</span>
-		                 	<span class='englishname'>English name</span>
-		             	</div>
-		         	</div>
+								<div class="avatarBox">
+									<img :src="item.avatar" />
+								</div>
+	             	<div class="name">
+	                 	<span class='chinesename'>{{item.Chinese_name}}</span>
+	                 	<span class='englishname'>{{item.english_name}}</span>
+	             	</div>
+		        </div>
 			     	<div class="bigBox">
 			     		<div class="touchwayBox">
 			     			<div class="touchPhone">
 			                    <img src="../assets/img/touch/phoneIcon.png">
-			                    <div class="number">1112233</div>
+			                    <div class="number">{{item.contact}}</div>
 			                    <div class="call">拨号</div>
 			                </div>
 			     		</div>
 			     		<div class="touchwayBox">
 			     			<div class="touchWechat">
 			                    <img src="../assets/img/touch/wechatIcon.png">
-			                    <div class="number">WECHAT-NUMBER</div>
-			                    <div class="copy">复制</div>
-			                </div>
+			                    <div class="number">{{item.wechat}}</div>
+													<button type="button" @click='copy(item.wechat)' class="copy"
+											     v-clipboard:copy="message"
+											     v-clipboard:success="onCopy"
+											     v-clipboard:error="onError">复制</button>
+								</div>
 			     		</div>
 			     		<div class="touchwayBox">
 			     			<div class="touchEmail">
 			                    <img src="../assets/img/touch/emailIcon.png">
-			                    <div class="number">XXXXXXXXX</div>
-			                    <div class="copy">复制</div>
-			                </div>
+			                    <div class="number">{{item.email}}</div>
+													<button type="button" @click='copy(item.email)' class="copy"
+											     v-clipboard:copy="message"
+											     v-clipboard:success="onCopy"
+											     v-clipboard:error="onError">复制</button>
+								</div>
 			     		</div>
 			     	</div>
 				</div>
@@ -44,6 +52,8 @@
 </template>
 <script>
 	import Head from './Head'
+	import store from '../store/store'
+
 	export default{
 		name:'touch',
 		components:{
@@ -51,12 +61,37 @@
 		},
 		data(){
 			return{
-				list:[1,2,3]
+				list:[],
+				message:'',
+			}
+		},
+		mounted(){
+			store.state.whatBg = false
+			this.axios.get('https://vtmer.erienniu.xyz/api/leader')
+			.then(res=>{
+				this.list=res.data.data
+			})
+			.catch(error=>{
+				console.log(error);
+			})
+		},
+		methods:{
+			copy(content){
+				this.message = content
+			},
+			onCopy: function (e) {
+				console.log('你刚刚复制: ' + e.text)
+			},
+			onError: function (e) {
+				console.log('无法复制文本！')
 			}
 		}
 	}
 </script>
 <style>
+	#touch{
+		overflow: hidden;
+	}
 	.BTNhome a{
 		color:#378cff
 	}
@@ -69,7 +104,7 @@
 		border-radius: 1.0667rem;
 		font-size: 0.24rem;
 		position: absolute;
-		top: 80.6%;
+		/* top: 80.6%; */
 		left: 36%;
 	}
 	.linkmans{
@@ -108,7 +143,7 @@
 	  display: flex;
 	  display: -webkit-flex; /* Safari */
 	  flex-direction: column;
-	  margin-left:0.67rem; 
+	  margin-left:0.67rem;
 	}
 	.touchwayBox {
 	  width: 8rem;
@@ -132,7 +167,7 @@
 		width: 0.5rem;
 		height: 0.35rem;
 	}
-	.number {  
+	.number {
 	  width: 2rem;
 	  margin-left: 0.45rem;
 	  font-size: 0.24rem;
@@ -140,23 +175,22 @@
 	  font-weight:300;
 	  width: 4.7333rem;
 	  margin-left: 1.6rem;
-	  margin-top: -0.55rem;
+	  margin-top: -0.65rem;
 	  display: block;
 	}
 	.call,
 	.copy {
 	  width: 1.12rem;
-	  height: 0.26rem;
 	  border: 0.018rem solid #33d066;
 	  border-radius: 0.6rem;
 	  line-height: 0.3rem;
 	  text-align: center;
 	  font-size: 0.16rem;
 	  color: #33d066;
-	  font-weight: 600;
 	  position: absolute;
 	  margin-top: -0.35rem;
 	  left: 78%;
+		background-color: transparent;
 	}
 	.copy {
 	  color: #378cff;
