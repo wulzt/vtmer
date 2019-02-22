@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <router-view v-if="isRouterAlive"></router-view>
     <BG v-if="$store.state.whatBg"></BG>
     <BGother v-if="!$store.state.whatBg"></BGother>
   </div>
@@ -15,6 +15,24 @@ export default {
   components:{
     BG,
     BGother,
+  },
+  provide (){
+    return {
+     reload:this.reload
+    }
+  },
+  methods:{
+    reload (){
+       this.isRouterAlive = false
+       this.$nextTick(function(){
+         this.isRouterAlive = true
+       })
+    }
+  },
+  data(){
+    return {
+       isRouterAlive:true
+    }
   },
 }
 </script>

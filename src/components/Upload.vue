@@ -4,10 +4,11 @@
     <div class="editImg">
         <el-upload
           class="avatar-uploader"
-          action="https://jsonplaceholder.typicode.com/posts/"
+          action="https://vtmer.erienniu.xyz/api/upload"
+          name="work"
           :show-file-list="false"
-          :on-success="handleAvatarSuccess"
-          :before-upload="beforeAvatarUpload">
+          :on-change="imgPreview"
+          :auto-upload="false">
           <img v-if="imageUrl" :src="imageUrl" class="avatar">
         </el-upload>
       <div class="ImgText">
@@ -18,16 +19,16 @@
     <div class="editForm">
       <form>
         <div class="editText">
-          <input type="text" name="title" placeholder="请在此输入标题"/>
+          <input type="text" name="title" placeholder="请在此输入标题" v-model="workname"/>
           <p>注：标题为6-12字符为宜</p>
         </div>
         <div class="editUrl">
-          <textarea cols="" rows="" name="url" placeholder="在此输入URL" maxlength="100"></textarea>
+          <textarea cols="" rows="" name="url" placeholder="在此输入URL" maxlength="100"  v-model="workurl"></textarea>
           <p>注：URL为32~48字符为宜。</p>
         </div>
       </form>
       <footer class="editBtn">
-        <div class="editUpload">
+        <div class="editUpload" @click="upload()">
           完成
         </div>
         <div class="editCancel" @click="isCancel=true">
@@ -46,7 +47,7 @@
           是否放弃<br />修改/上传内容
         </p>
         <div class="cancelBTN">
-          <div class="cancelYes">
+          <div class="cancelYes" @click="cancelSummit()">
             放弃
           </div>
           <div class="cancelNo" @click="isCancel=false">
@@ -69,23 +70,82 @@ export default{
   data(){
     return{
       isCancel: false,
+      workname:'',
+      workurl:'',
       imageUrl: '',
+      file:'',
+      name:'',
+      isUpdate: false,
     }
   },
   created(){
     store.state.whatBg=false;
+    if(store.state.editItem){
+      this.isUpdate = true
+      this.workname = store.state.editItem.name
+      this.imageUrl = store.state.editItem.image
+      this.workurl = store.state.editItem.description
+    }
   },
   methods:{
-    handleAvatarSuccess(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw);
-    },
-    beforeAvatarUpload(file) {
+    imgPreview(file, fileList) {
       const isLt2M = file.size / 1024 / 1024 < 2;
-
       if (!isLt2M) {
         this.$message.error('上传头像图片大小不能超过 2MB!');
       }
-      return isLt2M;
+
+      this.file = file.raw
+      this.imageUrl = URL.createObjectURL(file.raw);
+    },
+    upload(){
+      let data = new FormData();
+      data.append('name', this.workname);
+      data.append('description', this.workurl);
+      data.append('image', this.file);
+
+      if(this.isUpdate){
+        this.axios({
+          method: 'post',
+          url: 'https://vtmer.erienniu.xyz/api/update/'+store.state.editItem.id,
+          headers: {
+            'Content-type': 'multipart/form-data'
+          },
+          data: data
+        })
+          .then((res) => {
+            store.state.editItem=''
+            this.$router.push({
+              path:'/admin'
+            })
+
+          })
+          .catch((error) => {
+            store.state.editItem=''
+            console.log(error);
+
+          });
+      }else{
+        this.axios({
+          method: 'post',
+          url: 'https://vtmer.erienniu.xyz/api/new',
+          headers: {
+            'Content-type': 'multipart/form-data'
+          },
+          data: data
+        })
+          .then((res) => {
+            this.$router.push({
+              path:'/admin'
+            })
+
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    },
+    cancelSummit(){
+      this.$router.go(-1)
     }
   }
 }

@@ -7,13 +7,13 @@
     </div>
     <ul class="worksList">
       <li class="workItem" v-for="(item,index) in worksList">
-        <img :src="item.img"/>
+        <img :src="item.image"/>
         <div class="workCon">
           <p>
             {{item.name}}
           </p>
-          <input id="editWo" name="editWo" type="button" value="编辑" @click="editWo">
-          <input id="deleteWo" name="deleteWo" type="button" value="删除" @click="isDelete=true">
+          <input id="editWo" name="editWo" type="button" value="编辑" @click="editWo(index)">
+          <input id="deleteWo" name="deleteWo" type="button" value="删除" @click="deleteWo(index)">
         </div>
       </li>
     </ul>
@@ -28,10 +28,10 @@
             是否删除作品
           </p>
           <p>
-            "{{worksList[0].name}}"
+            "{{worksList[currentIndex].name}}"
           </p>
           <div class="deleteBTN">
-            <div class="deleteYes">
+            <div class="deleteYes" @click="dddddelete()">
               删除
             </div>
             <div class="deleteNo" @click="isDelete=false">
@@ -49,21 +49,28 @@ import Head from './Head'
 import store from '../store/store'
   export default{
     name: 'admin',
+    inject:['reload'],
     components:{
       Head,
     },
     data(){
       return{
         isDelete:false,
-        worksList:[
-          {name:'这是标题长长的标题大概这么长',img:require('../assets/img/administrate/show1.png')},
-          {name:'这是标题长长的标题大概这么长',img:require('../assets/img/administrate/show2.png')},
-          {name:'这是标题长长的标题大概这么长',img:require('../assets/img/administrate/show3.png')},
-        ],
+        worksList:[],
+        currentIndex:-1,
+        deleteId:-1,
       }
     },
     created(){
       store.state.whatBg=false;
+      this.axios.get('https://vtmer.erienniu.xyz/api/list')
+        .then(res => {
+          // 成功回调
+          this.worksList = res.data.data
+        }, res => {
+          // 错误回调
+          console.log(res);
+        })
     },
     methods:{
       upload(){
@@ -71,13 +78,27 @@ import store from '../store/store'
           path:'/upload',
         })
       },
-      editWo(){
+      editWo(index){
+        store.state.editItem = this.worksList[index]
         this.$router.push({
           path:'/upload',
         })
       },
-      deleteWo(){
-        alert('delete');
+      deleteWo(index){
+        this.isDelete = true
+        this.currentIndex = index
+        this.deleteId = this.worksList[index].id
+      },
+      dddddelete(){
+        this.axios.get('https://vtmer.erienniu.xyz/api/delete/'+this.deleteId)
+          .then(res => {
+            // 成功回调
+            this.isDelete=false
+            this.reload()
+          }, res => {
+            // 错误回调
+            console.log(res);
+          })
       }
     }
   }

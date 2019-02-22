@@ -36,18 +36,18 @@
     <div class="checkSubmitBox" v-if="isCheckSubmit">
       <div class="mask"></div>
       <div class="checkSubmitAlert">
-        <div class="close" @click="isCheckSubmit=false">
+        <div class="close" @click="checkSuccess()">
           <img src="../assets/img/home/close.png" />
         </div>
         <div class="checkSubmitContent">
           <p>
-            签到成功<br />你的编号是：
+            签到成功<br />
           </p>
           <div class="checkSubmitBTN">
-            <div class="checkSubmitYes" @click="isCheckSubmit=false">
+            <div class="checkSubmitYes" @click="checkSuccess()">
               确认
             </div>
-            <div class="checkSubmitNo" @click="isCheckSubmit=false">
+            <div class="checkSubmitNo" @click="checkSuccess()">
               返回
             </div>
           </div>
@@ -76,6 +76,28 @@
       </div>
 
     </div>
+    <div class="checkErrorBox" v-if="isCheckError">
+      <div class="mask"></div>
+      <div class="checkErrorAlert">
+        <div class="close" @click="isCheckError=false">
+          <img src="../assets/img/home/close.png" />
+        </div>
+        <div class="checkErrorContent">
+          <p>
+            抱歉<br />您没有面试资格
+          </p>
+          <div class="checkErrorBTN">
+            <div class="checkErrorYes" @click="isCheckError=false">
+              确认
+            </div>
+            <div class="checkErrorNo" @click="isCheckError=false">
+              返回
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 <script>
@@ -86,13 +108,15 @@ import store from '../store/store'
     components:{
       Head,
     },
-    created(){
+    mounted(){
       store.state.whatBg=false;
     },
     data() {
       return {
         isCheckSubmit:false,
         isCheckCancel:false,
+        isCheckError:false,
+        groupId:-1,
         checkInForm: {
           name: '',
           sex: '',
@@ -124,12 +148,61 @@ import store from '../store/store'
           path:'/interview',
         })
       },
+      checkSuccess(){
+        this.isCheckSubmit = false
+        this.$router.push({
+          path:'/waitNumber',
+        })
+      },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            this.$router.push({
-              path:'/waitNumber',
+            //获取groupId
+            if(this.checkInForm.group=='设计组'){
+              this.groupId = 1
+            }else if(this.checkInForm.group=='前端组'){
+              this.groupId = 2
+            }else if(this.checkInForm.group=='后台组'){
+              this.groupId = 3
+            }else{
+              this.groupId = 4
+            }
+
+            let data = new FormData();
+            data.append('name', this.checkInForm.name);
+            data.append('contact', this.checkInForm.phone);
+            data.append('group', this.groupId);
+
+            store.state.name=this.name
+            store.state.phone=this.phone
+            store.state.group=this.groupId
+            this.axios({
+              method: 'post',
+              url: 'https://vtmer.erienniu.xyz/api/queue-in',
+              headers: {
+                'Content-type': 'multipart/form-data'
+              },
+              data: data
             })
+              .then((res) => {
+                if(res.data.status==200){
+                  this.isCheckSubmit = true
+                  this.axios.get('https://vtmer.erienniu.xyz/api/check-queue')
+                    .then(function (response) {
+                      // handle success
+                      console.log(response);
+                    })
+                    .catch(function (error) {
+                      // handle error
+                      console.log(error);
+                    })
+                }else{
+                  this.isCheckError = true;
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+              });
           } else {
             console.log('error submit!!');
             return false;
@@ -205,8 +278,8 @@ import store from '../store/store'
   color: #76b2fd;
   font-size: .42rem;
   font-family: FZZHJW;
-  margin-top: 1.09rem;
-  margin-left: .7rem;
+  margin-top: 1.39rem;
+  margin-left: 1.1rem;
 }
 .checkSubmitYes,.checkSubmitNo{
   font-size: .26rem;
@@ -237,7 +310,7 @@ import store from '../store/store'
 .checkSubmitBTN{
   width: 3.84rem;
   margin: 0 auto;
-  margin-top: 1.13rem;
+  margin-top: 1.3rem;
   display: flex;
   justify-content: space-between;
 }
@@ -298,6 +371,68 @@ import store from '../store/store'
   height: 0.35rem;
 }
 .checkCancelBTN{
+  width: 3.84rem;
+  margin: 0 auto;
+  margin-top: 1.13rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+#checkIn .checkErrorBox .mask{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 14;
+  top: 0;
+  left: 0;
+  background: black;
+  opacity: 0.4;
+}
+.checkErrorAlert{
+  width: 6.05rem;
+  height: 4.92rem;
+  border-radius: 0.24rem;
+  background-color: rgb(255, 255, 255);
+  position: absolute;
+  top: 25.5%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 15;
+}
+.checkErrorContent p{
+  color: #76b2fd;
+  font-size: .42rem;
+  font-family: FZZHJW;
+  margin-top: 1.09rem;
+  margin-left: .7rem;
+}
+.checkErrorYes,.checkErrorNo{
+  font-size: .26rem;
+  width: 1.39rem;
+  line-height: .46rem;
+  text-align: center;
+  border-radius: .22rem;
+}
+.checkErrorYes{
+  background-color: #76b2fd;
+  border: solid .01rem #76b2fd;
+  color: #fff;
+}
+.checkErrorNo{
+  border: solid .01rem #808080;
+  color: #808080;
+}
+.close{
+  position: absolute;
+  top: 0.28rem;
+  right: 0.28rem;
+  font-size: 0;
+}
+.close img{
+  width: 0.35rem;
+  height: 0.35rem;
+}
+.checkErrorBTN{
   width: 3.84rem;
   margin: 0 auto;
   margin-top: 1.13rem;
