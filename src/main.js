@@ -3,6 +3,7 @@ import router from './router'
 import App from './App.vue'
 import store from './store/store.js'
 import axios from 'axios'
+import VueClipboard from 'vue-clipboard2'
 
 import { Upload,Icon,Form,Input,Radio,RadioGroup,FormItem,Button } from 'element-ui';
 Vue.use(Upload)
@@ -13,9 +14,11 @@ Vue.use(Input)
 Vue.use(Radio)
 Vue.use(RadioGroup)
 Vue.use(Button)
+Vue.use(VueClipboard)
 
 axios.defaults.withCredentials=true;
 Vue.prototype.axios = axios
+
 
 new Vue({
   el: '#app',

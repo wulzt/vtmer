@@ -8,7 +8,7 @@
       </div>
       <div class="content-center">
           <img alt="bigVtmLogo" src="../assets/img/home/SLOGAN.png"/>
-          <div class="content-BTNlogin">
+          <div class="content-BTNlogin" @click="changeBg">
               <router-link :to="{ name: 'works' }" id="openBtn">打开作品</router-link>
           </div>
           <div class="content-BTNsignup">
@@ -86,16 +86,23 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
         })
           .then((res) => {
             // session.setAttribute("user", obj);
-            console.log(res);
-            setCookie('username',this.username,1000*60)
-            this.$router.push({
-              path:'/admin',
-            })
+            if(res.data.status==200){
+              setCookie('username',this.username,1000*60)
+              this.$router.push({
+                path:'/admin',
+              })
+            }else{
+              this.loginFalse = true
+            }
           })
           .catch((error) => {
             this.loginFalse = true
           });
+      },
+      changeBg(){
+        store.state.whatBg=false
       }
+
     }
   }
 </script>
