@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '../components/Home'
+import Touch from '../components/Touch'
 import Works from '../components/Works'
 import Join from '../components/Join'
 import Admin from '../components/Admin'
@@ -19,6 +20,11 @@ export default new Router({
       path:'/works',
       name:'works',
       component:Works
+    },
+    {
+      path:'/touch',
+      name:'touch',
+      component:Touch
     },
     {
       path:'/join',

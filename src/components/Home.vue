@@ -8,7 +8,7 @@
       </div>
       <div class="content-center">
           <img alt="bigVtmLogo" src="../assets/img/home/SLOGAN.png"/>
-          <div class="content-BTNlogin">
+          <div class="content-BTNlogin" @click="changeBg">
               <router-link :to="{ name: 'works' }" id="openBtn">打开作品</router-link>
           </div>
           <div class="content-BTNsignup">
@@ -57,6 +57,9 @@ import store from '../store/store'
         this.$router.push({
           path:'/admin',
         })
+      },
+      changeBg(){
+        store.state.whatBg=false
       }
     }
   }
