@@ -4,7 +4,7 @@
     <div class="content-center">
         <img alt="bigVtmLogo" src="../assets/img/home/SLOGAN.png"/>
         <div class="content-BTNcheck">
-            <router-link :to="{ name: 'checkIn' }" id="checkIn">面试签到</router-link>
+            <div id="checkIn" @click="isCheck()">面试签到</div>
         </div>
     </div>
 
@@ -16,6 +16,30 @@ import store from '../store/store'
     name:'interview',
     created(){
       store.state.whatBg=true
+    },
+    methods:{
+      isCheck(){
+        let self = this
+        this.axios.get('https://vtmer.erienniu.xyz/api/check-queue')
+          .then(function (res) {
+            // handle success
+            console.log(res);
+
+            if(res.data.status==200){
+              self.$router.push({
+                path:'/waitNumber',
+              })
+            }else{
+              self.$router.push({
+                path:'/checkIn',
+              })
+            }
+          })
+          .catch(function (error) {
+            // handle error
+            console.log(error);
+          })
+      }
     }
   }
 </script>
@@ -52,7 +76,7 @@ import store from '../store/store'
     position: absolute;
     top: 80.86%;
 }
-.content-BTNcheck a{
+.content-BTNcheck{
   color: #fff;
   font-family: MSYHL;
 }

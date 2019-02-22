@@ -2,6 +2,8 @@ import Vue from 'vue'
 import router from './router'
 import App from './App.vue'
 import store from './store/store.js'
+import axios from 'axios'
+
 import { Upload,Icon,Form,Input,Radio,RadioGroup,FormItem,Button } from 'element-ui';
 Vue.use(Upload)
 Vue.use(Icon)
@@ -11,6 +13,9 @@ Vue.use(Input)
 Vue.use(Radio)
 Vue.use(RadioGroup)
 Vue.use(Button)
+
+axios.defaults.withCredentials=true;
+Vue.prototype.axios = axios
 
 new Vue({
   el: '#app',

@@ -4,23 +4,15 @@
     <Head></Head>
     <div class="waitBox">
       <div class="QYBox">
-        <el-upload
-          class="avatar-uploader"
-          action="https://jsonplaceholder.typicode.com/posts/"
-          :show-file-list="false"
-          :on-success="handleAvatarSuccess"
-          :before-upload="beforeAvatarUpload">
           <img v-if="imageUrl" :src="imageUrl" class="avatar">
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
       </div>
       <div class="waitContent">
         <p>
-          {{name}}同学<br />你的编号为：{{number}}
+          {{name}}同学<br />现排队人数为：{{all}}
         </p>
         <p>
           你前面还有<br />
-          <span>{{restNum}}</span>&nbsp;位
+          <span>{{rank}}</span>&nbsp;位
         </p>
         <div class="waitBTN">
           <div class="waitRefresh" @click="waitRefresh()">
@@ -59,6 +51,8 @@
 </template>
 <script>
 import Head from './Head'
+import store from '../store/store'
+
 export default{
   name:'waitNumber',
   components:{
@@ -66,33 +60,54 @@ export default{
   },
   data(){
     return{
-      name:'卢晓洁',
-      number:20,
-      restNum:12,
+      name:'',
+      all:-1,
+      rank:-1,
       isCheckCancel:false,
       imageUrl: '',
     }
   },
+  mounted(){
+    store.state.whatBg=false
+    let self = this
+    this.axios.get('https://vtmer.erienniu.xyz/api/check-queue')
+      .then(function (res) {
+        // handle success
+        console.log(res);
+        self.all = res.data.data.all
+        self.rank = res.data.data.rank
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+  },
   methods:{
-    handleAvatarSuccess(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw);
-    },
-    beforeAvatarUpload(file) {
-      const isJPG = file.type === 'image/jpeg';
-      const isLt2M = file.size / 1024 / 1024 < 2;
-
-      if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG 格式!');
-      }
-      if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!');
-      }
-      return isJPG && isLt2M;
-    },
     waitRefresh(){
-      alert('接口呢')
+      let self = this
+      this.axios.get('https://vtmer.erienniu.xyz/api/check-queue')
+        .then(function (res) {
+          // handle success
+          console.log(res);
+          self.all = res.data.data.all
+          self.rank = res.data.data.rank
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        })
     },
     waitQuit(){
+      let self = this
+      this.axios.get('https://vtmer.erienniu.xyz/api/queue-out')
+        .then(function (res) {
+          // handle success
+          console.log(res);
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        })
       this.isCheckCancel=false
       this.$router.push({
         path:'/interview',
