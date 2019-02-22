@@ -9,6 +9,7 @@ const state={
   phone: 0,
   group:-1,
   editItem:'',
+  avatar:'',
 }
 
 const mutations={

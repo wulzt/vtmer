@@ -69,11 +69,15 @@ export default{
   },
   mounted(){
     store.state.whatBg=false
+
+    var storage=window.localStorage;
+    this.name = JSON.parse(storage.getItem('name'))
+    this.imageUrl = JSON.parse(storage.getItem('avatar'))
+
     let self = this
     this.axios.get('https://vtmer.erienniu.xyz/api/check-queue')
       .then(function (res) {
         // handle success
-        console.log(res);
         self.all = res.data.data.all
         self.rank = res.data.data.rank
       })
@@ -88,7 +92,6 @@ export default{
       this.axios.get('https://vtmer.erienniu.xyz/api/check-queue')
         .then(function (res) {
           // handle success
-          console.log(res);
           self.all = res.data.data.all
           self.rank = res.data.data.rank
         })
@@ -102,7 +105,9 @@ export default{
       this.axios.get('https://vtmer.erienniu.xyz/api/queue-out')
         .then(function (res) {
           // handle success
-          console.log(res);
+          var storage=window.localStorage;
+          storage.removeItem("name");
+          storage.removeItem("avatar");
         })
         .catch(function (error) {
           // handle error

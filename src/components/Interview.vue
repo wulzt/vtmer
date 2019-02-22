@@ -23,8 +23,6 @@ import store from '../store/store'
         this.axios.get('https://vtmer.erienniu.xyz/api/check-queue')
           .then(function (res) {
             // handle success
-            console.log(res);
-
             if(res.data.status==200){
               self.$router.push({
                 path:'/waitNumber',
