@@ -165,6 +165,9 @@
   height: 4.73rem;
   margin: 0.55rem auto 0;
 }
+.mainbody .mainForm .mainForm-contains .showFromLeft {
+  transition: all 0.15s ease;
+}
 .mainbody .mainForm .mainForm-contains .mainForm-page {
   height: 4.73rem;
 }
@@ -452,4 +455,4 @@
   opacity: 0.4;
   filter: alpha(opacity=40);
 }
-/*# sourceMappingURL=joim.css.map */
+/*# sourceMappingURL=join.css.map */

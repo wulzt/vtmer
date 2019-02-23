@@ -28,7 +28,7 @@
         </el-steps>
 
         <div class="mainForm-contains">
-          <div class="groupChoice mainForm-page" v-if="active === 1">
+          <div class="groupChoice mainForm-page" v-if="active === 1" :class="pageAppear.groupChoice">
             <p>请选择你想加入的组别</p>
 
             <el-tabs v-model="formLabelAlign.group" @tab-click="groupChange" class="grouphead">
@@ -61,7 +61,7 @@
               </el-tab-pane>
             </el-tabs>
           </div>
-          <div class="basicInfo mainForm-page" v-if="active === 2">
+          <div class="basicInfo mainForm-page" v-if="active === 2" :class="pageAppear.basicInfo">
 
             <el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign"
                      ref="formLabelAlign" :rules="rules" class="FupForm">
@@ -102,7 +102,7 @@
 
             </el-form>
           </div>
-          <div class="detailInfo mainForm-page" v-if="active === 3">
+          <div class="detailInfo mainForm-page showFromLeft" v-if="active === 3">
             <el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign">
 
               <el-form-item label="个人简介" class="el-form-item45">
@@ -158,6 +158,10 @@
         imageUrl:'',
         active: 1,
         labelPosition:'top',
+        pageAppear:{
+          groupChoice:"",
+          basicInfo:"showFromLeft"
+        },
         btnStatus:{
           btndisable:true,
           btnClass:'',
@@ -267,5 +271,5 @@
 </script>
 
 <style lang="less">
-  @import "../assets/css/joim";
+  @import "../assets/css/join";
 </style>
