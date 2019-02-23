@@ -61,8 +61,9 @@ import store from '../store/store'
         deleteId:-1,
       }
     },
-    created(){
+    mounted(){
       store.state.whatBg=false;
+      store.state.editItem='';
       this.axios.get('https://vtmer.erienniu.xyz/api/list')
         .then(res => {
           // 成功回调

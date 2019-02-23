@@ -1,0 +1,474 @@
+.mainbody{
+  /*font-size: 0;*/
+  width: 5.85rem;
+  height: 9.15rem;
+  margin: 0.9rem auto 0;
+  z-index: 11;
+  background-color: #fff;
+  /*头像上传*/
+  .upimg{
+    position: absolute;
+    z-index: 12;
+    width: 1.63rem;
+    height: 1.63rem;
+    left: 50%;
+    margin-left: -0.815rem;
+    background-color: #fff;
+    border-radius: 50%;
+    &::after{
+      content: '上传头像';
+      font-size: 0.18rem;
+      color: rgb(152,152,155);
+      width: 1.63rem;
+      position: absolute;
+      margin-top: 100%;
+      text-align: center;
+      line-height: 0.36rem;
+    }
+    .avatar-uploader .el-upload {
+      cursor: pointer;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      border-radius: 50%;
+      z-index: 12;
+      .headbg{
+        position: absolute;
+        width: 100%;
+        margin-top: 50%;
+        margin-left: -50%;
+        z-index: 12;
+      }
+      .imgDefault{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        margin-left: -50%;
+        img{
+          position: absolute;
+          width: 100%;
+        }
+        img:last-child{
+          width: 0.6rem;
+          margin-top: 50%;
+          margin-left: 50%;
+          transform: translate(-0.3rem,-0.3rem);
+        }
+      }
+    }
+
+    .avatar-uploader .el-upload:hover {
+      border-color: #409EFF;
+    }
+    .avatar {
+      position: absolute;
+      width: 100%;
+      display: block;
+      z-index: 11;
+    }
+  }
+  .mainForm{
+    position: absolute;
+    width: 5.85rem;
+    height: 8.53rem;
+    background-color: #fff;
+    z-index: 11;
+    margin-top: 0.815rem;
+    border-radius: 0.1rem;
+    /*!**!
+    margin-left: 50%;
+    transform: translate(-50%,0);
+    !**!*/
+    .mainForm-steps{
+      font-size: 0.257rem;
+      width: 5.14rem;
+      height: 0.34rem;
+      line-height: 0.34rem;
+      margin: 1.51rem auto 0;
+
+      .el-step__line{
+        display: none;
+      }
+      .el-step__icon{
+        display: none;
+      }
+      .el-step__title{
+        font-size: 0.257rem;
+        line-height: 0.34rem;
+      }
+      .el-step__title.is-wait{
+        color: rgb(236,236,236);
+      }
+      .el-step__title.is-process{
+        color: rgb(236,236,236);
+      }
+      .el-step__title.is-success{
+        color: rgb(56,51,51);
+      }
+      .el-step:first-child .el-step__title:before{
+        content: '①';
+        color: rgb(236,236,236);
+      }
+      .el-step:nth-child(2) .el-step__title:before{
+        content: '②';
+        color: rgb(236,236,236);
+      }
+      .el-step:last-child .el-step__title:before{
+        content: '③';
+        color: rgb(236,236,236);
+      }
+
+      .el-step:nth-child(2) .el-step__title::after{
+        content: '>>';
+        position: absolute;
+        color: rgb(236,236,236);
+        left: -0.423rem;
+        line-height: 0.34rem;
+      }
+      .el-step:last-child .el-step__title::after{
+        content: '>>';
+        position: absolute;
+        color: rgb(236,236,236);
+        left: -0.423rem;
+        line-height: 0.34rem;
+      }
+      .el-step:nth-child(2) .el-step__title.is-success:after{
+        content: '>>';
+        position: absolute;
+        color: rgb(56,51,51);
+        left: -0.423rem;
+        line-height: 0.34rem;
+      }
+      .el-step:last-child .el-step__title.is-success::after{
+        content: '>>';
+        position: absolute;
+        color: rgb(56,51,51);
+        left: -0.423rem;
+        line-height: 0.34rem;
+      }
+      .el-step:first-child .el-step__title.is-success:before{
+        content: '①';
+        color: rgb(36,171,80);
+      }
+      .el-step:nth-child(2) .el-step__title.is-success:before{
+        content: '②';
+        color: rgb(36,171,80);
+      }
+      .el-step:last-child .el-step__title.is-success:before{
+        content: '③';
+        color: rgb(36,171,80);
+      }
+    }
+    .mainForm-contains{
+      font-size: 0.24rem;
+      width: 4.91rem;
+      height: 4.73rem;
+      margin: 0.55rem auto 0;
+      .showFromLeft{
+        transition: all 0.15s ease;
+      }
+
+      .mainForm-page{
+        height: 4.73rem;
+      }
+      .groupChoice{
+        p{
+          margin: 0.11rem auto 0;
+          color: rgb(56,51,51);
+          font-size: 0.24rem;
+        }
+        .grouphead{
+          margin: 0.45rem auto 0;
+          width: 4.86rem;
+          height: 0.42rem;
+          .el-tabs__header{
+            .el-tabs__nav-wrap{
+              padding: 0;
+              .el-tabs__nav-prev{/*display: none*/}
+              .el-tabs__nav-next{/*display: none*/}
+              .el-tabs__nav-scroll{
+                .el-tabs__nav{
+                  .el-tabs__active-bar{
+                    display: none;
+                  }
+                  .el-tabs__item{
+                    width: 1.04rem;
+                    height: 0.43rem;
+                    font-size: 0.237rem;
+                    line-height: 0.43rem;
+                    padding: 0;
+                    text-align: center;
+                    color: rgb(118,178,253);
+                    border: 0.01rem solid rgb(118,178,253);
+                    background-color: #fff;
+                    border-radius: 1rem;
+                    margin-left: 0.233333rem;
+                  }
+                  .el-tabs__item:nth-child(2){
+                    margin-left: 0;
+                  }
+                  .el-tabs__item.is-active{
+                    color: #fff;
+                    background-color: rgb(118,178,253);
+                  }
+                }
+              }
+              &::after{
+                display: none;
+              }
+            }
+          }
+        }
+        .groupInfo{
+          /*margin: 0.51rem auto 0;*/
+          width: 4.86rem;
+          height: 4.73rem;
+          font-size: 0.21rem;
+          color: rgb(98,101,105);
+          line-height: 0.49rem;
+        }
+      }
+      .basicInfo{
+        .el-form{
+          width: 4.91rem;
+          height: 4.73rem;
+          /*姓名，性别*/
+          .el-row {
+            margin-bottom: 20px;
+            &:last-child {
+              margin-bottom: 0;
+            }
+            .el-form-item{
+              width: 2rem;
+              margin-bottom: 0;
+              .el-form-item__label{
+                height: 0.49rem;
+                font-size: 0.21rem;
+                line-height: 0.49rem;
+                margin: 0;
+                color: rgb(66,69,71);
+              }
+              .el-form-item__content{
+                line-height: 0.58rem;
+                .el-radio-group{
+                  width: 100%;
+                  height: 0.58rem;
+                  .el-radio{
+                    top: 50%;
+                    margin-right: 0;
+                    transform: translate(0,-50%);
+                    .el-radio__label{
+                      padding: 0 0 0 0.13rem;
+                    }
+                  }
+                  .el-radio:last-child{
+                    left: 0.56rem;
+                    margin-left: -0.28rem;
+                  }
+                }
+              }
+              .el-input{
+                width: 2rem;
+                border-radius: 0.15rem;
+                height: 0.58rem;
+              }
+              .el-input__inner{
+                width: 2rem;
+                border-radius: 0.15rem;
+                border: 0.02rem solid rgb(153,153,153);
+                font-size: 0.26rem;
+                margin: 0;
+                padding: 0 0.2rem;
+                color: rgb(51,51,51);
+                height: 0.58rem;
+              }
+              .el-radio__inner{
+                border: 0.02rem solid rgb(197,197,197);
+              }
+              .el-radio__input.is-checked .el-radio__inner{
+                background-color: #fff;
+                border: 0.04rem solid rgb(197,197,197);
+              }
+              .el-radio__inner:hover{
+
+              }
+              .el-radio__input.is-checked .el-radio__inner::after{
+                background-color: rgb(56,51,51);
+              }
+            }
+          }
+          .el-col {
+            border-radius: 4px;
+          }
+          /*学院专业，联系方式*/
+          .el-form-item23{
+            width: 4.91rem;
+            margin: 0.44rem auto 0;
+            .el-form-item__label{
+              height: 0.49rem;
+              font-size: 0.21rem;
+              line-height: 0.49rem;
+              margin: 0;
+              color: rgb(66,69,71);
+            }
+            .el-form-item__content{
+              line-height: 0.58rem;
+              .el-radio-group{
+                width: 100%;
+                height: 0.58rem;
+              }
+            }
+            .el-input{
+              width: 4.91rem;
+              border-radius: 0.15rem;
+              height: 0.58rem;
+            }
+            .el-input__inner{
+              width: 4.91rem;
+              border-radius: 0.15rem;
+              border: 0.02rem solid rgb(153,153,153);
+              font-size: 0.26rem;
+              margin: 0;
+              padding: 0 0.2rem;
+              color: rgb(51,51,51);
+              height: 0.58rem;
+            }
+          }
+          .item-form-end{
+            color: rgb(137,137,137);
+            margin: 0.18rem auto 0;
+            font-size: 0.21rem;
+          }
+          .el-form-item__label ,.item-form-end{
+            padding-left: 0.13rem;
+          }
+          .nopadding .el-form-item__label{
+            padding-left: 0;
+          }
+          .el-form-item23:nth-child(3) .el-form-item__error{
+            top: -0.45rem;
+            left: 1.40rem;
+          }
+          /*iconfont*/
+          .el-radio:first-child i{
+            color: rgb(255,122,185);
+          }
+          .el-radio:last-child i{
+            color: rgb(118,178,253);
+          }
+          .iconfont {
+            font-family: "iconfont" !important;
+            font-size: 16px;
+            font-style: normal;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+          }
+
+          .icon-i-girl:before {
+            content: "\e936";
+          }
+
+          .icon-boy:before {
+            content: "\e7bb";
+          }
+        }
+      }
+      .detailInfo{
+        .el-form{
+          width: 4.91rem;
+          height: 4.73rem;
+
+          .el-form-item:first-child{
+             margin-bottom: 0.45rem;
+           }
+          .el-form-item:nth-child(2){
+            margin-bottom: 0;
+          }
+          .el-form-item__label{
+            height: 0.49rem;
+            font-size: 0.21rem;
+            line-height: 0.49rem;
+            margin: 0;
+            color: rgb(66,69,71);
+          }
+          .el-form-item__content{
+            line-height: 0.58rem;
+            .el-radio-group{
+              width: 100%;
+              height: 0.58rem;
+            }
+          }
+          .el-textarea{
+            width: 4.91rem;
+            border-radius: 0.15rem;
+            height: 1.45rem;
+          }
+          .el-textarea__inner{
+            width: 4.91rem;
+            border-radius: 0.15rem;
+            border: 0.02rem solid rgb(153,153,153);
+            font-size: 0.26rem;
+            margin: 0;
+            padding: 0 0.2rem;
+            color: rgb(51,51,51);
+            height: 1.45rem;
+          }
+          .item-form-end{
+            color: rgb(137,137,137);
+            margin: 0.18rem auto 0;
+            font-size: 0.21rem;
+          }
+          .el-form-item__label ,.item-form-end{
+            padding-left: 0.13rem;
+          }
+        }
+      }
+    }
+    .mainForm-buttons{
+      position: relative;
+      font-size: 0.25rem;
+      width: 4.62rem;
+      height: 0.5rem;
+      margin: 0.39rem auto 0;
+      .el-button{
+        width: 1.5rem;
+        height: 0.49rem;
+        color: rgb(51,208,102);
+        border: 0.01rem solid rgb(51,208,102);
+        border-radius: 0.17rem;
+        line-height: 0.49rem;
+        padding: 0;
+      }
+      .el-button:last-child{
+        position: absolute;
+        right: 0;
+      }
+      .el-button:first-child{
+        position: absolute;
+        left: 0;
+      }
+      .prev-btn{
+        background-color: rgb(51,208,102);
+        color: #fff;
+      }
+      .btn-useable{
+        background-color: rgb(51,208,102);
+        color: #fff;
+      }
+    }
+  }
+
+}
+/*遮盖层*/
+.mask {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  background: black;
+  opacity: 0.4;
+  filter: alpha(opacity=40);
+}
