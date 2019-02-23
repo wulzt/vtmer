@@ -14,11 +14,13 @@ Vue.use(Radio)
 Vue.use(RadioGroup)
 Vue.use(Button)
 
-import {Tabs,TabPane,Steps,Step} from 'element-ui';
+import {Tabs,TabPane,Steps,Step,Row,Col} from 'element-ui';
 Vue.use(Tabs);
 Vue.use(TabPane);
 Vue.use(Steps);
 Vue.use(Step);
+Vue.use(Row);
+Vue.use(Col);
 
 axios.defaults.withCredentials=true;
 Vue.prototype.axios = axios

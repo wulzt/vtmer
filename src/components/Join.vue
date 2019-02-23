@@ -61,8 +61,57 @@
               </el-tab-pane>
             </el-tabs>
           </div>
-          <div class="basicInfo mainForm-page" v-if="active === 2">基本信息</div>
-          <div class="detailInfo mainForm-page" v-if="active === 3">详细信息</div>
+          <div class="basicInfo mainForm-page" v-if="active === 2">
+
+            <el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign">
+
+              <el-row  style="margin-bottom: 10px">
+                <el-col :span="10"><!--9.775-->
+                  <el-form-item label="*姓名">
+                    <el-input v-model="formLabelAlign.name" id="Username"  form='FupForm' name="name"></el-input>
+                  </el-form-item>
+                </el-col>
+
+                <el-col class="line" :span="4" style="opacity: 0">---</el-col><!--4.480-->
+
+                <el-col :span="10">
+                  <el-form-item label="*性别" class="nopadding">
+                    <el-radio-group v-model="formLabelAlign.gender" id="UserSex">
+                      <el-radio label="1">
+                        <i class="iconfont icon-girl"></i>
+                      </el-radio>
+                      <el-radio label="2">
+                        <i class="iconfont icon-boy"></i>
+                      </el-radio>
+                    </el-radio-group>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-form-item label="*学院专业" class="el-form-item23">
+                <el-input v-model="formLabelAlign.major" name="major"></el-input>
+              </el-form-item>
+              <el-form-item label="*联系方式" class="el-form-item23">
+                <el-input v-model="formLabelAlign.contact" name="contact"></el-input>
+              </el-form-item>
+              <p class="item-form-end">记得上传你的专属头像</p>
+
+            </el-form>
+          </div>
+          <div class="detailInfo mainForm-page" v-if="active === 3">
+            <el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign">
+
+              <el-form-item label="个人简介" class="el-form-item45">
+                <el-input type="textarea" v-model="formLabelAlign.description"></el-input>
+              </el-form-item>
+
+              <el-form-item label="个人经历" class="el-form-item45">
+                <el-input type="textarea" v-model="formLabelAlign.experience"></el-input>
+              </el-form-item>
+
+              <p class="item-form-end">记得上传你的专属头像</p>
+            </el-form>
+          </div>
         </div>
 
 
@@ -81,6 +130,7 @@
 <script>
   import Head from './Head'
   import store from '../store/store'
+  import '../assets/css/icon/iconfont.css'
   export default {
     name: 'join',
     created(){
@@ -91,6 +141,15 @@
         imageUrl:'',
         active: 1,
         activeName: 1,
+        labelPosition:'top',
+        formLabelAlign:{
+          name:'',
+          gender:'',
+          major:'',
+          contact:'',
+          description:'',
+          experience:'',
+        },
       }
     },
     methods: {

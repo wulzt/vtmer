@@ -72,7 +72,7 @@
   position: absolute;
   width: 5.85rem;
   height: 8.53rem;
-  background-color: #c0c0c0;
+  background-color: #fff;
   z-index: 11;
   margin-top: 0.815rem;
   /*!**!
@@ -164,6 +164,9 @@
   height: 4.73rem;
   margin: 0.55rem auto 0;
 }
+.mainbody .mainForm .mainForm-contains .mainForm-page {
+  height: 4.73rem;
+}
 .mainbody .mainForm .mainForm-contains .groupChoice p {
   margin: 0.11rem auto 0;
   color: #383333;
@@ -216,6 +219,189 @@
   font-size: 0.21rem;
   color: #626569;
   line-height: 0.49rem;
+}
+.mainbody .mainForm .mainForm-contains .basicInfo .el-form {
+  width: 4.91rem;
+  height: 4.73rem;
+  /*姓名，性别*/
+  /*学院专业，联系方式*/
+  /*iconfont*/
+}
+.mainbody .mainForm .mainForm-contains .basicInfo .el-form .el-row {
+  margin-bottom: 20px;
+}
+.mainbody .mainForm .mainForm-contains .basicInfo .el-form .el-row:last-child {
+  margin-bottom: 0;
+}
+.mainbody .mainForm .mainForm-contains .basicInfo .el-form .el-row .el-form-item {
+  width: 2rem;
+  margin-bottom: 0;
+}
+.mainbody .mainForm .mainForm-contains .basicInfo .el-form .el-row .el-form-item .el-form-item__label {
+  height: 0.49rem;
+  font-size: 0.21rem;
+  line-height: 0.49rem;
+  margin: 0;
+  color: #424547;
+}
+.mainbody .mainForm .mainForm-contains .basicInfo .el-form .el-row .el-form-item .el-form-item__content {
+  line-height: 0.58rem;
+}
+.mainbody .mainForm .mainForm-contains .basicInfo .el-form .el-row .el-form-item .el-form-item__content .el-radio-group {
+  width: 100%;
+  height: 0.58rem;
+}
+.mainbody .mainForm .mainForm-contains .basicInfo .el-form .el-row .el-form-item .el-form-item__content .el-radio-group .el-radio {
+  top: 50%;
+  margin-right: 0;
+  transform: translate(0, -50%);
+}
+.mainbody .mainForm .mainForm-contains .basicInfo .el-form .el-row .el-form-item .el-form-item__content .el-radio-group .el-radio .el-radio__label {
+  padding: 0 0 0 0.13rem;
+}
+.mainbody .mainForm .mainForm-contains .basicInfo .el-form .el-row .el-form-item .el-form-item__content .el-radio-group .el-radio:last-child {
+  left: 0.56rem;
+  margin-left: -0.28rem;
+}
+.mainbody .mainForm .mainForm-contains .basicInfo .el-form .el-row .el-form-item .el-input {
+  width: 2rem;
+  border-radius: 0.15rem;
+  height: 0.58rem;
+}
+.mainbody .mainForm .mainForm-contains .basicInfo .el-form .el-row .el-form-item .el-input__inner {
+  width: 2rem;
+  border-radius: 0.15rem;
+  border: 0.02rem solid #999999;
+  font-size: 0.26rem;
+  margin: 0;
+  padding: 0 0.2rem;
+  color: #333333;
+  height: 0.58rem;
+}
+.mainbody .mainForm .mainForm-contains .basicInfo .el-form .el-row .el-form-item .el-radio__inner {
+  border: 0.02rem solid #c5c5c5;
+}
+.mainbody .mainForm .mainForm-contains .basicInfo .el-form .el-row .el-form-item .el-radio__input.is-checked .el-radio__inner {
+  background-color: #fff;
+  border: 0.04rem solid #c5c5c5;
+}
+.mainbody .mainForm .mainForm-contains .basicInfo .el-form .el-row .el-form-item .el-radio__input.is-checked .el-radio__inner::after {
+  background-color: #383333;
+}
+.mainbody .mainForm .mainForm-contains .basicInfo .el-form .el-col {
+  border-radius: 4px;
+}
+.mainbody .mainForm .mainForm-contains .basicInfo .el-form .el-form-item23 {
+  width: 4.91rem;
+  margin: 0.44rem auto 0;
+}
+.mainbody .mainForm .mainForm-contains .basicInfo .el-form .el-form-item23 .el-form-item__label {
+  height: 0.49rem;
+  font-size: 0.21rem;
+  line-height: 0.49rem;
+  margin: 0;
+  color: #424547;
+}
+.mainbody .mainForm .mainForm-contains .basicInfo .el-form .el-form-item23 .el-form-item__content {
+  line-height: 0.58rem;
+}
+.mainbody .mainForm .mainForm-contains .basicInfo .el-form .el-form-item23 .el-form-item__content .el-radio-group {
+  width: 100%;
+  height: 0.58rem;
+}
+.mainbody .mainForm .mainForm-contains .basicInfo .el-form .el-form-item23 .el-input {
+  width: 4.91rem;
+  border-radius: 0.15rem;
+  height: 0.58rem;
+}
+.mainbody .mainForm .mainForm-contains .basicInfo .el-form .el-form-item23 .el-input__inner {
+  width: 4.91rem;
+  border-radius: 0.15rem;
+  border: 0.02rem solid #999999;
+  font-size: 0.26rem;
+  margin: 0;
+  padding: 0 0.2rem;
+  color: #333333;
+  height: 0.58rem;
+}
+.mainbody .mainForm .mainForm-contains .basicInfo .el-form .item-form-end {
+  color: #898989;
+  margin: 0.18rem auto 0;
+  font-size: 0.21rem;
+}
+.mainbody .mainForm .mainForm-contains .basicInfo .el-form .el-form-item__label,
+.mainbody .mainForm .mainForm-contains .basicInfo .el-form .item-form-end {
+  padding-left: 0.13rem;
+}
+.mainbody .mainForm .mainForm-contains .basicInfo .el-form .nopadding .el-form-item__label {
+  padding-left: 0;
+}
+.mainbody .mainForm .mainForm-contains .basicInfo .el-form .el-radio:first-child i {
+  color: #ff7ab9;
+}
+.mainbody .mainForm .mainForm-contains .basicInfo .el-form .el-radio:last-child i {
+  color: #76b2fd;
+}
+.mainbody .mainForm .mainForm-contains .basicInfo .el-form .iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.mainbody .mainForm .mainForm-contains .basicInfo .el-form .icon-i-girl:before {
+  content: "\e936";
+}
+.mainbody .mainForm .mainForm-contains .basicInfo .el-form .icon-boy:before {
+  content: "\e7bb";
+}
+.mainbody .mainForm .mainForm-contains .detailInfo .el-form {
+  width: 4.91rem;
+  height: 4.73rem;
+}
+.mainbody .mainForm .mainForm-contains .detailInfo .el-form .el-form-item:first-child {
+  margin-bottom: 0.45rem;
+}
+.mainbody .mainForm .mainForm-contains .detailInfo .el-form .el-form-item:nth-child(2) {
+  margin-bottom: 0;
+}
+.mainbody .mainForm .mainForm-contains .detailInfo .el-form .el-form-item__label {
+  height: 0.49rem;
+  font-size: 0.21rem;
+  line-height: 0.49rem;
+  margin: 0;
+  color: #424547;
+}
+.mainbody .mainForm .mainForm-contains .detailInfo .el-form .el-form-item__content {
+  line-height: 0.58rem;
+}
+.mainbody .mainForm .mainForm-contains .detailInfo .el-form .el-form-item__content .el-radio-group {
+  width: 100%;
+  height: 0.58rem;
+}
+.mainbody .mainForm .mainForm-contains .detailInfo .el-form .el-textarea {
+  width: 4.91rem;
+  border-radius: 0.15rem;
+  height: 1.45rem;
+}
+.mainbody .mainForm .mainForm-contains .detailInfo .el-form .el-textarea__inner {
+  width: 4.91rem;
+  border-radius: 0.15rem;
+  border: 0.02rem solid #999999;
+  font-size: 0.26rem;
+  margin: 0;
+  padding: 0 0.2rem;
+  color: #333333;
+  height: 1.45rem;
+}
+.mainbody .mainForm .mainForm-contains .detailInfo .el-form .item-form-end {
+  color: #898989;
+  margin: 0.18rem auto 0;
+  font-size: 0.21rem;
+}
+.mainbody .mainForm .mainForm-contains .detailInfo .el-form .el-form-item__label,
+.mainbody .mainForm .mainForm-contains .detailInfo .el-form .item-form-end {
+  padding-left: 0.13rem;
 }
 .mainbody .mainForm .mainForm-buttons {
   position: relative;
