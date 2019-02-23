@@ -31,7 +31,7 @@
           <div class="groupChoice mainForm-page" v-if="active === 1">
             <p>请选择你想加入的组别</p>
 
-            <el-tabs v-model="activeName.toString()" @tab-click="handleClick" class="grouphead">
+            <el-tabs v-model="formLabelAlign.group" @tab-click="groupChange" class="grouphead">
 
               <el-tab-pane label="前端组" name="1" class="groupInfo">
                 通过html，css，javascript以及衍生出来的各种库（
@@ -63,20 +63,22 @@
           </div>
           <div class="basicInfo mainForm-page" v-if="active === 2">
 
-            <el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign">
+            <el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign"
+                     ref="formLabelAlign" :rules="rules" class="FupForm">
 
               <el-row  style="margin-bottom: 10px">
                 <el-col :span="10"><!--9.775-->
-                  <el-form-item label="*姓名">
-                    <el-input v-model="formLabelAlign.name" id="Username"  form='FupForm' name="name"></el-input>
+                  <el-form-item label="姓名"
+                                prop="name" :rules="[{ required: true, message: '姓名不能为空'}]">
+                    <el-input v-model="formLabelAlign.name" id="Username"  form='FupForm' name="name" @change="judgeStatus"></el-input>
                   </el-form-item>
                 </el-col>
 
                 <el-col class="line" :span="4" style="opacity: 0">---</el-col><!--4.480-->
 
                 <el-col :span="10">
-                  <el-form-item label="*性别" class="nopadding">
-                    <el-radio-group v-model="formLabelAlign.gender" id="UserSex">
+                  <el-form-item label="性别" class="nopadding" :rules="[{required: true}]">
+                    <el-radio-group v-model="formLabelAlign.gender" @change="judgeStatus" form="FupForm" name="gender">
                       <el-radio label="1">
                         <i class="iconfont icon-girl"></i>
                       </el-radio>
@@ -88,11 +90,13 @@
                 </el-col>
               </el-row>
 
-              <el-form-item label="*学院专业" class="el-form-item23">
-                <el-input v-model="formLabelAlign.major" name="major"></el-input>
+              <el-form-item label="学院专业" class="el-form-item23"
+                            prop="major" :rules="[{required: true,message: '学院专业不能为空'}]">
+                <el-input v-model="formLabelAlign.major" form="FupForm" name="major" @change="judgeStatus"></el-input>
               </el-form-item>
-              <el-form-item label="*联系方式" class="el-form-item23">
-                <el-input v-model="formLabelAlign.contact" name="contact"></el-input>
+              <el-form-item label="联系方式" class="el-form-item23"
+                            prop="contact" >
+                <el-input v-model.number="formLabelAlign.contact" form="FupForm" name="contact" @change="judgeStatus"></el-input>
               </el-form-item>
               <p class="item-form-end">记得上传你的专属头像</p>
 
@@ -102,11 +106,11 @@
             <el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign">
 
               <el-form-item label="个人简介" class="el-form-item45">
-                <el-input type="textarea" v-model="formLabelAlign.description"></el-input>
+                <el-input type="textarea" v-model="formLabelAlign.description" @change="judgeDetails" class="FupForm" form="FupForm" name="description"></el-input>
               </el-form-item>
 
               <el-form-item label="个人经历" class="el-form-item45">
-                <el-input type="textarea" v-model="formLabelAlign.experience"></el-input>
+                <el-input type="textarea" v-model="formLabelAlign.experience" @change="judgeDetails" form="FupForm" name="experience"></el-input>
               </el-form-item>
 
               <p class="item-form-end">记得上传你的专属头像</p>
@@ -116,10 +120,10 @@
 
 
         <div class="mainForm-buttons">
-          <el-button style="" @click="prev" v-if="active === 2||active === 3">上一步</el-button>
+          <el-button style="" @click="prev" v-if="active === 2||active === 3" class="prev-btn">上一步</el-button>
           <el-button v-if="active === 1" style="opacity: 0;" disabled></el-button>
-          <el-button style="" @click="next" v-if="active === 1||active === 2">下一步</el-button>
-          <el-button style="" @click="finish" v-if="active === 3">完成</el-button>
+          <el-button style="" @click="next" v-if="active === 1||active === 2" class="next-btn" :disabled="btnStatus.btndisable" :class="btnStatus.btnClass">下一步</el-button>
+          <el-button style="" @click="finish" v-if="active === 3" class="finish-btn" :disabled="btn2Status.btndisable" :class="btn2Status.btnClass">完成</el-button>
         </div>
       </div>
     </div>
@@ -131,18 +135,39 @@
   import Head from './Head'
   import store from '../store/store'
   import '../assets/css/icon/iconfont.css'
+  import axios from 'axios';
   export default {
     name: 'join',
     created(){
       store.state.whatBg=false;
     },
     data() {
+      var checkContact = (rule,value,callbacks) => {
+        if(!value){
+          return callbacks(new Error('号码不能为空'));
+        }else{
+          const reg = /^1[3|4|5|7|8][0-9]\d{8}$/;
+          if(reg.test(value)){
+            callbacks();
+          }else{
+            return callbacks(new Error('请输入正确的手机号'));
+          }
+        }
+      };
       return {
         imageUrl:'',
         active: 1,
-        activeName: 1,
         labelPosition:'top',
+        btnStatus:{
+          btndisable:true,
+          btnClass:'',
+        },
+        btn2Status:{
+          btndisable:true,
+          btnClass:'',
+        },
         formLabelAlign:{
+          group: '1',
           name:'',
           gender:'',
           major:'',
@@ -150,7 +175,14 @@
           description:'',
           experience:'',
         },
-      }
+        rules: {
+          contact:[
+            {validator: checkContact,trigger: 'blur'},
+            {required: true}
+          ]
+        }
+      };
+
     },
     methods: {
       /*图片上传*/
@@ -162,19 +194,70 @@
         this.file = file.raw;
         this.imageUrl = URL.createObjectURL(file.raw);
       },
+      /*组别改变*/
+      groupChange(){
+        this.btnStatus.btndisable = false;
+        this.btnStatus.btnClass = "btn-useable";
+      },
+      /*上一步*/
       prev(){
         --this.active;
         if(this.active < 0) this.active = 0;
+        this.btnStatus.btndisable = false;
+        this.btnStatus.btnClass = "btn-useable";
       },
       /*下一步*/
       next() {
         //++this.active;
         if (this.active++ > 2) this.active = 0;
+        this.judgeStatus();
+        this.judgeDetails();
       },
       /*完成*/
       finish(){
+        let User = this.formLabelAlign;
+        let upData = new FormData();
+        for(let i in User){
+          if(i=='gender'||i=='group'){
+            upData.append(i,parseInt(User[i]));
+          }else{
+            upData.append(i,User[i]);
+          }
+        }
+        upData.append("avatar",this.file);
 
+        axios.post('https://vtmer.erienniu.xyz/api/sign', upData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+          .then(function (response) {
+            console.log(response.status + response.statusText);
+          })
+          .catch(function (error) {
+            console.log(error.status + error.statusText);
+          });
       },
+      judgeStatus(){
+        let User = this.formLabelAlign;
+        if(User.name == ""||User.gender == ""||User.major == ""||User.contact == ""){
+          this.btnStatus.btndisable = true;
+          this.btnStatus.btnClass = "";
+        }else{
+          this.btnStatus.btndisable = false;
+          this.btnStatus.btnClass = "btn-useable";
+        }
+      },
+      judgeDetails(){
+        let User = this.formLabelAlign;
+        if(User.description == ""||User.experience == ""){
+          this.btn2Status.btndisable = true;
+          this.btn2Status.btnClass = "";
+        }else{
+          this.btn2Status.btndisable = false;
+          this.btn2Status.btnClass = "btn-useable";
+        }
+      }
     },
 
     components:{

@@ -75,6 +75,7 @@
     background-color: #fff;
     z-index: 11;
     margin-top: 0.815rem;
+    border-radius: 0.1rem;
     /*!**!
     margin-left: 50%;
     transform: translate(-50%,0);
@@ -341,6 +342,10 @@
           .nopadding .el-form-item__label{
             padding-left: 0;
           }
+          .el-form-item23:nth-child(3) .el-form-item__error{
+            top: -0.45rem;
+            left: 1.40rem;
+          }
           /*iconfont*/
           .el-radio:first-child i{
             color: rgb(255,122,185);
@@ -439,6 +444,14 @@
         position: absolute;
         left: 0;
       }
+      .prev-btn{
+        background-color: rgb(51,208,102);
+        color: #fff;
+      }
+      .btn-useable{
+        background-color: rgb(51,208,102);
+        color: #fff;
+      }
     }
   }
 
@@ -451,7 +464,7 @@
   z-index: 10;
   top: 0;
   left: 0;
-  background: rgb(191,191,191);
+  background: black;
   opacity: 0.4;
   filter: alpha(opacity=40);
 }

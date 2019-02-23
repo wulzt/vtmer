@@ -75,6 +75,7 @@
   background-color: #fff;
   z-index: 11;
   margin-top: 0.815rem;
+  border-radius: 0.1rem;
   /*!**!
     margin-left: 50%;
     transform: translate(-50%,0);
@@ -336,6 +337,10 @@
 .mainbody .mainForm .mainForm-contains .basicInfo .el-form .nopadding .el-form-item__label {
   padding-left: 0;
 }
+.mainbody .mainForm .mainForm-contains .basicInfo .el-form .el-form-item23:nth-child(3) .el-form-item__error {
+  top: -0.45rem;
+  left: 1.4rem;
+}
 .mainbody .mainForm .mainForm-contains .basicInfo .el-form .el-radio:first-child i {
   color: #ff7ab9;
 }
@@ -427,6 +432,14 @@
   position: absolute;
   left: 0;
 }
+.mainbody .mainForm .mainForm-buttons .prev-btn {
+  background-color: #33d066;
+  color: #fff;
+}
+.mainbody .mainForm .mainForm-buttons .btn-useable {
+  background-color: #33d066;
+  color: #fff;
+}
 /*遮盖层*/
 .mask {
   width: 100%;
@@ -435,7 +448,7 @@
   z-index: 10;
   top: 0;
   left: 0;
-  background: #bfbfbf;
+  background: black;
   opacity: 0.4;
   filter: alpha(opacity=40);
 }
