@@ -237,6 +237,7 @@
           }
         })
           .then(function (response) {
+            alert('提交成功！');
             self.$router.push({
               path:'/'
             })
