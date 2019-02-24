@@ -23,8 +23,8 @@
           <p>注：标题为6-12字符为宜</p>
         </div>
         <div class="editUrl">
-          <textarea cols="" rows="" name="url" placeholder="在此输入URL" maxlength="100"  v-model="workurl"></textarea>
-          <p>注：URL为32~48字符为宜。</p>
+          <textarea cols="" rows="" name="url" placeholder="在此输入作品简介" maxlength="100"  v-model="workurl"></textarea>
+          <p>注：简介为32~48字符为宜。</p>
         </div>
       </form>
       <footer class="editBtn">

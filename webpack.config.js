@@ -1,7 +1,11 @@
 var path = require('path')
 var webpack = require('webpack')
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
+  optimization: {
+    minimize: false
+  },
   entry: './src/main.js',
   output: {
     path: path.resolve(__dirname, './dist'),
@@ -36,7 +40,7 @@ module.exports = {
         use: [{
           loader: 'url-loader',
           options: {
-            limit: 10000
+            name: '[name].[ext]?[hash]',
           }
         }]
       },
@@ -46,6 +50,21 @@ module.exports = {
       },
     ]
   },
+  plugins: [
+    new UglifyJSPlugin({
+      uglifyOptions: {
+        warning: "verbose",
+        ecma: 6,
+        beautify: false,
+        compress: false,
+        comments: false,
+        mangle: false,
+        toplevel: false,
+        keep_classnames: true,
+        keep_fnames: true
+      }
+    })
+  ],
   resolve: {
     alias: {
       'vue$': 'vue/dist/vue.esm.js'
@@ -72,14 +91,5 @@ if (process.env.NODE_ENV === 'production') {
         NODE_ENV: '"production"'
       }
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
-      compress: {
-        warnings: false
-      }
-    }),
-    new webpack.LoaderOptionsPlugin({
-      minimize: true
-    })
   ])
 }
