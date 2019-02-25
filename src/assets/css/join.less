@@ -1,3 +1,9 @@
+@font-face {
+  font-family: "MSYHL";
+  src: url('../fonts/MicrosoftYaHeiLight.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
 .mainbody{
   /*font-size: 0;*/
   width: 5.85rem;
@@ -5,6 +11,17 @@
   margin: 0.9rem auto 0;
   z-index: 11;
   background-color: #fff;
+
+  .iconfont {
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .icon-guanbi:before {
+    content: "\e658";
+  }
   /*头像上传*/
   .upimg{
     position: absolute;
@@ -16,8 +33,9 @@
     background-color: #fff;
     border-radius: 50%;
     &::after{
-      content: '上传头像';
-      font-size: 0.18rem;
+      content: '请上传头像';
+      font-family: "MSYHL";
+      font-size: 0.22rem;
       color: rgb(152,152,155);
       width: 1.63rem;
       position: absolute;
@@ -68,6 +86,84 @@
       z-index: 11;
     }
   }
+  .popframe{
+    position: absolute;
+    width: 5.26rem;
+    height: 4.27rem;
+    -webkit-border-radius: 0.24rem;
+    -moz-border-radius: 0.24rem;
+    border-radius: 0.24rem;
+    background-color: #fff;
+    margin-top: 1.415rem;
+    left: 50%;
+    transform: translate(-50%,0);
+    z-index: 14;
+    .icon-guanbi{
+      position: absolute;
+      top: 0.22rem;
+      right: 0.22rem;
+      font-size: 0.27rem;
+    }
+    @font-face {
+      font-family: "FZZHJW";
+      src: url('../fonts/FZZHJW.ttf');
+      font-style: normal;
+    }
+    p{
+      font-family: "FZZHJW";
+      font-size: 0.416rem;
+      line-height: 0.48rem;
+      font-weight: normal;
+      margin-left: 0.67rem;
+      margin-top: 1.07rem;
+    }
+    .popBtns{
+      position: absolute;
+      width: 3.50rem;
+      height: 0.45rem;
+      bottom: 0.68rem;
+      left: 50%;
+      transform: translate(-50%,0);
+      .el-button{
+        position: absolute;
+        width: 1.40rem;
+        height: 0.45rem;
+        line-height: 0.45rem;
+        font-weight: normal;
+        font-size: 0.2604rem;
+        padding: 0;
+        border-radius: 0.23rem;
+      }
+      .el-button:first-child{
+        left: 0;
+        border: none;
+        color: #fff;
+      }
+      .el-button:last-child{
+        right: 0;
+        border: 0.02rem solid #808080;
+        color: #808080;
+      }
+    }
+  }
+  .confirmClose,.applyErr{
+    p{
+      color: rgb(255,92,100);
+    }
+    .el-button:first-child{
+      background-color: rgb(255,92,100);
+      border: 0.02rem solid rgb(255,92,100);
+    }
+
+  }
+  .applySuccess{
+    p{
+      color: rgb(118,178,253);
+    }
+    .el-button:first-child{
+      background-color: rgb(118,178,253);
+    }
+  }
   .mainForm{
     position: absolute;
     width: 5.85rem;
@@ -76,10 +172,11 @@
     z-index: 11;
     margin-top: 0.815rem;
     border-radius: 0.1rem;
-    /*!**!
-    margin-left: 50%;
-    transform: translate(-50%,0);
-    !**!*/
+    .closebtn{
+      position: absolute;
+      right: 0.28rem;
+      top: 0.28rem;
+    }
     .mainForm-steps{
       font-size: 0.257rem;
       width: 5.14rem;
@@ -194,13 +291,13 @@
                   }
                   .el-tabs__item{
                     width: 1.04rem;
-                    height: 0.43rem;
+                    height: 0.42rem;
                     font-size: 0.237rem;
-                    line-height: 0.43rem;
+                    line-height: 0.39rem;
                     padding: 0;
                     text-align: center;
                     color: rgb(118,178,253);
-                    border: 0.01rem solid rgb(118,178,253);
+                    border: 0.02rem solid rgb(118,178,253);
                     background-color: #fff;
                     border-radius: 1rem;
                     margin-left: 0.233333rem;
@@ -282,6 +379,7 @@
                 padding: 0 0.2rem;
                 color: rgb(51,51,51);
                 height: 0.58rem;
+                line-height: 0.58rem;
               }
               .el-radio__inner{
                 border: 0.02rem solid rgb(197,197,197);
@@ -333,6 +431,7 @@
               padding: 0 0.2rem;
               color: rgb(51,51,51);
               height: 0.58rem;
+              line-height: 0.58rem;
             }
           }
           .item-form-end{
@@ -449,8 +548,8 @@
         left: 0;
       }
       .prev-btn{
-        background-color: rgb(51,208,102);
-        color: #fff;
+        background-color: #fff;
+        color: rgb(51,208,102);
       }
       .btn-useable{
         background-color: rgb(51,208,102);
@@ -462,13 +561,24 @@
 }
 /*遮盖层*/
 .mask {
+   width: 100%;
+   height: 100%;
+   position: absolute;
+   z-index: 10;
+   top: 0;
+   left: 0;
+   background: black;
+   opacity: 0.4;
+   filter: alpha(opacity=40);
+ }
+.mask2{
   width: 100%;
   height: 100%;
   position: absolute;
-  z-index: 10;
+  z-index: 13;
   top: 0;
   left: 0;
   background: black;
-  opacity: 0.4;
-  filter: alpha(opacity=40);
+  opacity: 0.2;
+  filter: alpha(opacity=20);
 }

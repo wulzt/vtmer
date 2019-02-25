@@ -2,6 +2,7 @@
   <div id="join">
     <Head></Head>
     <div class="mask"></div>
+    <div class="mask2" v-if="confirmClose == true||applyErr == true||applySuccess == true"></div>
     <div class="mainbody">
       <div class="upimg">
 
@@ -19,7 +20,43 @@
           <img src="../assets/img/apply/headbg.png" alt="headbg" class="headbg"/>
         </el-upload>
       </div>
+      <div class="confirmClose popframe" v-if="confirmClose">
+        <div class="iconfont icon-guanbi" @click="confirmClose = false"></div>
+        <p>
+          是否放弃<br/>
+          编辑/上传报名表
+        </p>
+        <div class="popBtns">
+          <el-button @click="closePage">放弃</el-button>
+          <el-button @click="confirmClose = false">取消</el-button>
+        </div>
+      </div>
+      <!--重复提交弹窗-->
+      <div class="applyErr popframe" v-if="applyErr">
+        <div class="iconfont icon-guanbi" @click="applyErr = false"></div>
+        <p>
+          重复提交<br/>
+          请耐心等待面试通知
+        </p>
+        <div class="popBtns">
+          <el-button @click="closePage">主页</el-button>
+          <el-button @click="applyErr = false">返回</el-button>
+        </div>
+      </div>
+      <!--报名成功弹窗-->
+      <div class="applySuccess popframe" v-if="applySuccess">
+        <div class="iconfont icon-guanbi" @click="applySuccess = false"></div>
+        <p>
+          提交成功<br/>
+          我们期待你的加入
+        </p>
+        <div class="popBtns">
+          <el-button @click="closePage">主页</el-button>
+          <el-button @click="applySuccess = false">返回</el-button>
+        </div>
+      </div>
       <div class="mainForm">
+        <div class=" iconfont icon-guanbi closebtn" @click="confirmClose = true"></div>
         <el-steps
           :active="active" finish-status="success" class="mainForm-steps">
           <el-step title="选择组别"></el-step>
@@ -33,7 +70,7 @@
 
             <el-tabs v-model="formLabelAlign.group" @tab-click="groupChange" class="grouphead">
 
-              <el-tab-pane label="前端组" name="1" class="groupInfo">
+              <el-tab-pane label="前端组" name="2" class="groupInfo">
                 通过html，css，javascript以及衍生出来的各种库（
                 jQuery/bootstrap/animate）、框架（AngularJS/
                 vue.js/React.js）、解决方案来实现互联网产品的用
@@ -41,13 +78,13 @@
                 致力于为用户呈现更优美的页面，更流畅的交互。<br>
                 ......还有，在前台给UI和后台端茶递水。
               </el-tab-pane>
-              <el-tab-pane label="后台组" name="2" class="groupInfo">
+              <el-tab-pane label="后台组" name="3" class="groupInfo">
                 PHP是世界上最好的语言，我们使用Linux系统做开发，
                 自主搭建开发环境，致力于构建Web后台API，git，Laravel,
                 Composer组合使用，SQL，NoSQL灵活应用，时刻掌握第一手数据。<br>
                 (ps:给前端做苦力)
               </el-tab-pane>
-              <el-tab-pane label="设计组" name="3" class="groupInfo">
+              <el-tab-pane label="设计组" name="1" class="groupInfo">
                 我们以Ps、Ai等设计软件为画笔，画出内心构想的设计蓝图，属于夜晚较为活泼的物种。<br>
                 我们爱设计，爱生活，爱天马行空的想象。
                 熬了无数的夜晚就是希望自己的作品能打动观看者的心。<br>
@@ -156,8 +193,8 @@
       };
       return {
         imageUrl:'',
-        active: 1,
-        labelPosition:'top',
+        active: 1,//当前步骤
+        labelPosition:'top',//表单文字布局（top/left）
         pageAppear:{
           groupChoice:"",
           basicInfo:"showFromLeft"
@@ -170,8 +207,13 @@
           btndisable:true,
           btnClass:'',
         },
+        /*弹框*/
+        confirmClose:false,//取消弹框
+        applySuccess:false,//成功弹框
+        applyErr:false,//重复弹框
+        changeIndex:"",
         formLabelAlign:{
-          group: '1',
+          group: '',
           name:'',
           gender:'',
           major:'',
@@ -189,6 +231,13 @@
 
     },
     methods: {
+      /*关闭页面*/
+      closePage(){
+        let self = this;
+        self.$router.push({
+          path:'/'
+        });
+      },
       /*图片上传*/
       imgPreview(file){
         const isLt2M = file.size / 1024 / 1024 < 2;
@@ -229,21 +278,23 @@
           }
         }
         upData.append("avatar",this.file);
-
-        let self = this
-        axios.post('https://vtmer.erienniu.xyz/api/sign', upData, {
+        let self = this;
+        this.axios.post('https://vtmer.erienniu.xyz/api/sign', upData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
         })
           .then(function (response) {
-            alert('提交成功！');
-            self.$router.push({
-              path:'/'
-            })
+            console.log(response.status + response.statusText)
+            if(response.status === 200){
+              console.log("success")
+            }
+            if(response.status === 404){
+              console.log('repeat')
+            }
           })
           .catch(function (error) {
-            console.log(error);
+
           });
       },
       judgeStatus(){

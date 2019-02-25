@@ -62,7 +62,9 @@ html, body {
     width: 100%;
     height: 100%;
 }
-
+input{
+  outline:0px; -webkit-appearance:none;
+}
 #app {
   font-family: Microsoft YaHei,'Avenir', Helvetica, Arial, sans-serif;
   font-weight: 300;
