@@ -238,6 +238,13 @@
           path:'/'
         });
       },
+      /*axios后弹框*/
+      popSuccess(){
+        this.applySuccess = true;
+      },
+      popRepeat(){
+        this.applyErr = true;
+      },
       /*图片上传*/
       imgPreview(file){
         const isLt2M = file.size / 1024 / 1024 < 2;
@@ -287,10 +294,10 @@
           .then(function (response) {
             console.log(response.status + response.statusText)
             if(response.status === 200){
-              console.log("success")
+              this.popSuccess();
             }
             if(response.status === 404){
-              console.log('repeat')
+              this.popRepeat();
             }
           })
           .catch(function (error) {
