@@ -328,14 +328,9 @@
           });
       },
       sendCode(){
-        //--------------------------
-        this.cansendCode();
-
-
-        //-------------------------
         //发送验证码期间不能修改号码
         this.canContact = true;
-        /*let phoneData = new FormData();
+        let phoneData = new FormData();
         phoneData.append('group',this.group);
         phoneData.append('name',this.name);
         phoneData.append('mobile',this.contact);
@@ -346,15 +341,15 @@
           }
         }).then(function (response) {
           if(response.status == 200){
-            /!*禁用获取验证码按钮1分钟，1小时5条，1天10条*!/
+            /*禁用获取验证码按钮1分钟，1小时5条，1天10条*/
             this.cansendCode();
           }
           if(response.status == 400){
-            /!*验证码发送失败，禁用1分钟按钮，弹框？*!/
+            /*验证码发送失败，禁用1分钟按钮，弹框？*/
           }
         }).catch(function (error) {
 
-        })*/
+        })
       },
       /*禁用获得验证码按钮*/
       cansendCode(){

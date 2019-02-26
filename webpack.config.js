@@ -55,7 +55,16 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
     noInfo: true,
-    overlay: true
+    overlay: true,
+    /*port:80,
+    host:'https://vtmer.obstacle.cn',
+    proxy: {
+      '/api/!*': {//匹配根路径
+        target: 'https://vtmer.erienniu.xyz',//跨域要访问的地址及端口
+        changeOrigin: true,
+        secure: false,
+      }
+    }*/
   },
   performance: {
     hints: false
