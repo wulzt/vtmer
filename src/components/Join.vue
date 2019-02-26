@@ -2,7 +2,7 @@
   <div id="join">
     <Head></Head>
     <div class="mask"></div>
-    <div class="mask2" v-if="confirmClose == true||applyErr == true||applySuccess == true"></div>
+    <div class="mask2" v-if="confirmClose == true||applyErr == true||applySuccess == true||CodeErr == true"></div>
     <div class="mainbody">
       <div class="upimg">
 
@@ -53,6 +53,16 @@
         <div class="popBtns">
           <el-button @click="closePage">主页</el-button>
           <el-button @click="applySuccess = false">返回</el-button>
+        </div>
+      </div>
+      <div class="CodeErr popframe" v-if="CodeErr">
+        <div class="iconfont icon-guanbi" @click="CodeErr = false"></div>
+        <p>
+          提交失败<br/>
+          验证码错误或已过期
+        </p>
+        <div class="popBtns">
+          <el-button @click="CodeErr = false">返回</el-button>
         </div>
       </div>
       <div class="mainForm">
@@ -131,10 +141,13 @@
                             prop="major" :rules="[{required: true,message: '学院专业不能为空'}]">
                 <el-input v-model="formLabelAlign.major" form="FupForm" name="major" @change="judgeStatus"></el-input>
               </el-form-item>
-              <el-form-item label="联系方式" class="el-form-item23"
-                            prop="contact" >
-                <el-input v-model.number="formLabelAlign.contact" form="FupForm" name="contact" @change="judgeStatus"></el-input>
-              </el-form-item>
+              <div class="contactbtns">
+                <el-form-item label="联系方式" class="el-form-item23 contactbtn"
+                              prop="contact" >
+                  <el-input v-model.number="formLabelAlign.contact" form="FupForm" name="contact" @change="judgeStatus" @blur="judgeSendCode()" :disabled="canContact"></el-input>
+                </el-form-item>
+                <button class="verification" @click.prevent="sendCode" :disabled="sendCodebtn">{{btntxt}}</button>
+              </div>
               <p class="item-form-end">记得上传你的专属头像</p>
 
             </el-form>
@@ -182,12 +195,15 @@
       var checkContact = (rule,value,callbacks) => {
         if(!value){
           return callbacks(new Error('号码不能为空'));
+          this.contactisTrue = false;
         }else{
           const reg = /^1[3|4|5|7|8][0-9]\d{8}$/;
           if(reg.test(value)){
+            this.contactisTrue = true;
             callbacks();
           }else{
             return callbacks(new Error('请输入正确的手机号'));
+            this.contactisTrue = false;
           }
         }
       };
@@ -211,13 +227,18 @@
         confirmClose:false,//取消弹框
         applySuccess:false,//成功弹框
         applyErr:false,//重复弹框
-        changeIndex:"",
+        CodeErr:false,//验证码错误弹框
+        contactisTrue:false,
+        btntxt:'获取验证码',
+        time:0,
+        sendCodebtn:true,
         formLabelAlign:{
           group: '',
           name:'',
           gender:'',
           major:'',
           contact:'',
+          code:'',
           description:'',
           experience:'',
         },
@@ -239,12 +260,9 @@
         });
       },
       /*axios后弹框*/
-      popSuccess(){
-        this.applySuccess = true;
-      },
-      popRepeat(){
-        this.applyErr = true;
-      },
+      popSuccess(){this.applySuccess = true;},
+      popRepeat(){this.applyErr = true;},
+      codeWrong(){this.CodeErr = true},
       /*图片上传*/
       imgPreview(file){
         const isLt2M = file.size / 1024 / 1024 < 2;
@@ -296,13 +314,70 @@
             if(response.status === 200){
               this.popSuccess();
             }
+            /*重复注册*/
             if(response.status === 404){
               this.popRepeat();
+            }
+            /*验证码错误/过期*/
+            if(response.status === 403){
+              this.codeWrong();
             }
           })
           .catch(function (error) {
 
           });
+      },
+      sendCode(){
+        //--------------------------
+        this.cansendCode();
+
+
+        //-------------------------
+        //发送验证码期间不能修改号码
+        this.canContact = true;
+        /*let phoneData = new FormData();
+        phoneData.append('group',this.group);
+        phoneData.append('name',this.name);
+        phoneData.append('mobile',this.contact);
+        let self = this;
+        this.axios.post('https://vtmer.erienniu.xyz/api/sign-mobile',phoneData,{
+          headers:{
+            'Content-Type': 'multipart/form-data'
+          }
+        }).then(function (response) {
+          if(response.status == 200){
+            /!*禁用获取验证码按钮1分钟，1小时5条，1天10条*!/
+            this.cansendCode();
+          }
+          if(response.status == 400){
+            /!*验证码发送失败，禁用1分钟按钮，弹框？*!/
+          }
+        }).catch(function (error) {
+
+        })*/
+      },
+      /*禁用获得验证码按钮*/
+      cansendCode(){
+        this.time = 60;
+        this.sendCodebtn = true;
+        this.timer();
+      },
+      //60S倒计时
+      timer() {
+        if (this.time > 0) {
+          this.time--;
+          this.btntxt = this.time + "s后重新获取";
+          setTimeout(this.timer, 1000);
+        } else {
+          this.time = 0;
+          this.btntxt = "获取验证码";
+          this.sendCodebtn = false;
+          this.canContact = false;
+        }
+      },
+      /*验证码错误*/
+      codeWrong(){
+
       },
       judgeStatus(){
         let User = this.formLabelAlign;
@@ -312,6 +387,22 @@
         }else{
           this.btnStatus.btndisable = false;
           this.btnStatus.btnClass = "btn-useable";
+        }
+      },
+      judgeSendCode(){
+        let contactTxt = this.formLabelAlign.contact;
+        if(contactTxt == ''){
+          this.contactisTrue = false;
+        }else{
+          const reg = /^1[3|4|5|7|8][0-9]\d{8}$/;
+          if(reg.test(contactTxt)){
+            this.contactisTrue = true;
+          }else{
+            this.contactisTrue = false;
+          }
+        }
+        if(this.contactisTrue == true){
+          this.sendCodebtn = false;
         }
       },
       judgeDetails(){

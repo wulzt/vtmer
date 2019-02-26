@@ -146,7 +146,7 @@
       }
     }
   }
-  .confirmClose,.applyErr{
+  .confirmClose,.applyErr,.CodeErr{
     p{
       color: rgb(255,92,100);
     }
@@ -162,6 +162,15 @@
     }
     .el-button:first-child{
       background-color: rgb(118,178,253);
+    }
+  }
+  .CodeErr{
+    .el-button{
+      left: 1.05rem !important;
+    }
+    .el-button:first-child{
+      background-color: #fff;
+      color: #808080;
     }
   }
   .mainForm{
@@ -434,6 +443,39 @@
               line-height: 0.58rem;
             }
           }
+          .contactbtns{
+            position: relative;
+            width: 4.91rem;
+            margin: 0.44rem auto 0;
+            height: 1.07rem;
+            .contactbtn{
+              position: absolute;
+              width: 2.80rem ;
+              margin: 0;
+              .el-input{
+                width: 2.80rem
+              }
+              .el-input__inner{
+                width: 2.80rem
+              }
+            }
+            .verification{
+              position: absolute;
+              width: 1.74rem;
+              height: 0.58rem;
+              border-radius: 0.15rem;
+              background-color: #76b2fd;
+              color: #fff;
+              font-size: 0.26rem;
+              line-height: 0.58rem;
+              right: 0;
+              bottom: 0;
+              border: 0.02rem solid #76b2fd;
+              outline: none;
+            }
+          }
+
+
           .item-form-end{
             color: rgb(137,137,137);
             margin: 0.18rem auto 0;
@@ -445,9 +487,10 @@
           .nopadding .el-form-item__label{
             padding-left: 0;
           }
-          .el-form-item23:nth-child(3) .el-form-item__error{
+          .contactbtn .el-form-item__error{
             top: -0.45rem;
             left: 1.40rem;
+            white-space: nowrap;
           }
           /*iconfont*/
           .el-radio:first-child i{
