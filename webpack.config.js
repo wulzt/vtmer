@@ -57,20 +57,15 @@ module.exports = {
     noInfo: true,
     overlay: true,
     /*port:80,
-    host:'https://vtmer.obstacle.cn',
-    proxy: {
-      '/api/!*': {//匹配根路径
-        target: 'https://vtmer.erienniu.xyz',//跨域要访问的地址及端口
-        changeOrigin: true,
-        secure: false,
-      }
-    }*/
+    host:'localhost',
+    disableHostCheck: true,*/
   },
   performance: {
     hints: false
   },
   devtool: '#eval-source-map'
 }
+
 
 if (process.env.NODE_ENV === 'production') {
   module.exports.devtool = '#source-map'

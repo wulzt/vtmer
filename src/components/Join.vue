@@ -158,7 +158,7 @@
                 <el-input v-model.number="formLabelAlign.contact" form="FupForm" name="contact" @change="judgeStatus" @blur="judgeSendCode()" :disabled="canContact"></el-input>
               </el-form-item>
               <div class="contactbtns">
-                <el-input  class="codeInput" v-model.number="formLabelAlign.code" placeholder="请输入验证码" @change="judgeStatus"></el-input>
+                <el-input  class="codeInput" v-model="formLabelAlign.code" placeholder="请输入验证码" @change="judgeStatus"></el-input>
                 <button class="verification" @click.prevent="sendCode" :disabled="sendCodebtn">{{btntxt}}</button>
               </div>
               <p class="item-form-end">记得上传你的专属头像</p>
@@ -325,17 +325,17 @@
           }
         })
           .then(function (response) {
-            console.log(response.status + response.statusText)
-            if(response.status === 200){
-              this.popSuccess();
+            let resstatus = JSON.parse(response.request.response).status;
+            if(resstatus === 200){
+              self.popSuccess();
             }
             /*重复注册*/
-            if(response.status === 404){
-              this.popRepeat();
+            if(resstatus === 404){
+              self.popRepeat();
             }
             /*验证码错误/过期*/
-            if(response.status === 403){
-              this.codeWrong();
+            if(resstatus === 403){
+              self.codeWrong();
             }
           })
           .catch(function (error) {
@@ -344,22 +344,23 @@
       },
       sendCode(){
         let phoneData = new FormData();
-        phoneData.append('group',this.group);
-        phoneData.append('name',this.name);
-        phoneData.append('mobile',this.contact);
+        phoneData.append('group',this.formLabelAlign.group);
+        phoneData.append('name',this.formLabelAlign.name);
+        phoneData.append('mobile',this.formLabelAlign.contact);
         let self = this;
         this.axios.post('https://vtmer.erienniu.xyz/api/sign-mobile',phoneData,{
           headers:{
             'Content-Type': 'multipart/form-data'
           }
         }).then(function (response) {
-          if(response.status == 200){
+          let resstatus = JSON.parse(response.request.response).status;
+          if(resstatus == 200){
             /*禁用获取验证码按钮1分钟，1小时5条，1天10条*/
-            this.cansendCode();
-          }
-          if(response.status == 400){
+            self.cansendCode();
+        }
+          if(resstatus == 400){
             /*验证码发送失败，弹框*/
-            this.sendCodeWrong();
+            self.sendCodeWrong();
           }
         }).catch(function (error) {
 
@@ -377,7 +378,7 @@
       timer() {
         if (this.time > 0) {
           this.time--;
-          this.btntxt = this.time + "s后重新获取";
+          this.btntxt = "已发送(" + this.time + ")";
           setTimeout(this.timer, 1000);
         } else {
           this.time = 0;
