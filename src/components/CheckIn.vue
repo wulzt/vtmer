@@ -185,17 +185,20 @@ import store from '../store/store'
               data: data
             })
               .then((res) => {
-                //localStorage
-                var storage=window.localStorage;
+                console.log(res);
 
-                if(!window.localStorage){
-                    alert("浏览器不支持localstorage");
-                    return false;
-                }else{
-                    storage.setItem("name",JSON.stringify(res.data.data.name));
-                    storage.setItem("avatar",JSON.stringify(res.data.data.avatar));
-                }
                 if(res.data.status==200){
+                  //localStorage
+                  var storage=window.localStorage;
+
+                  if(!window.localStorage){
+                      alert("浏览器不支持localstorage");
+                      return false;
+                  }else{
+                      storage.setItem("name",JSON.stringify(res.data.data.name));
+                      storage.setItem("avatar",JSON.stringify(res.data.data.avatar));
+                  }
+
                   this.isCheckSubmit = true
                   this.axios.get('https://vtmer.erienniu.xyz/api/check-queue')
                     .then(function (response) {

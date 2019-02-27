@@ -49,7 +49,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
   export default{
     data(){
       return{
-        loginBtn:'/src/assets/img/home/BTN-LOG1.png',
+        loginBtn:require('../assets/img/home/BTN-LOG1.png'),
         isLogin: false,
         loginFalse: false,
         username:'',
@@ -58,7 +58,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     },
     mounted(){
       if(getCookie('username')){
-        this.loginBtn = '/src/assets/img/home/BTN-LOG2.png'
+        this.loginBtn = require('../assets/img/home/BTN-LOG2.png')
       }
     },
     methods:{

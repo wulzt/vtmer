@@ -40,13 +40,13 @@ export default {
 <style>
 @font-face {
   font-family: "FZZHJW";
-  src: url('/src/assets/fonts/FZZHJW.ttf');
+  src: url('./assets/fonts/FZZHJW.ttf');
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: "MSYHL";
-  src: url('/src/assets/fonts/MicrosoftYaHeiLight.ttf');
+  src: url('./assets/fonts/MicrosoftYaHeiLight.ttf');
   font-weight: normal;
   font-style: normal;
 }
@@ -62,10 +62,19 @@ html, body {
     width: 100%;
     height: 100%;
 }
-
+input{
+  outline:0px; -webkit-appearance:none;
+}
 #app {
   font-family: Microsoft YaHei,'Avenir', Helvetica, Arial, sans-serif;
   font-weight: 300;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
 }
 
 a{
