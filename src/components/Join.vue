@@ -275,5 +275,5 @@
 </script>
 
 <style lang="less">
-  @import "../assets/css/join";
+  @import "../assets/css/join.less";
 </style>
