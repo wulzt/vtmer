@@ -27,7 +27,7 @@ module.exports = {
         // 用哪个html作为模板
         // 在src目录下创建一个index.html页面当做模板来用
         template: './index.html',
-        hash: true, // 会在打包好的bundle.js后面加上hash串
+        hash: true, // 会在打包好的build.js后面加上hash串
     }),
     new MiniCssExtractPlugin({
       filename: 'css/app.[name].css',
