@@ -57,10 +57,9 @@
     font-size: 0.24rem;
     position: absolute;
     top: 80.86%;
+    color: #378cff;
 }
-.content-BTNlogin a{
-  color: #378cff;
-}
+
 .content-BTNsignup{
   width: 2.16rem;
   height: 0.46rem;
@@ -71,9 +70,8 @@
   font-size: 0.24rem;
   position: absolute;
   top: 87.6%;
-}
-.content-BTNsignup a{
   color: #33d066;
+
 }
 
 /**弹出层**/

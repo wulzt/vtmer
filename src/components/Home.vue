@@ -2,17 +2,17 @@
   <div class="homeContent">
       <div id="header">
           <img alt="LOGO" class="LOGO" src="../assets/img/LOGO.png"/>
-          <a class="content-login" href="#" @click="admin()">
+          <div class="content-login" @click="admin()">
               <img alt="login" id="loginBtn" :src="loginBtn"/>
-          </a>
+          </div>
       </div>
       <div class="content-center">
           <img alt="bigVtmLogo" src="../assets/img/home/SLOGAN.png"/>
-          <div class="content-BTNlogin" @click="changeBg">
-              <router-link :to="{ name: 'works' }" id="openBtn">打开作品</router-link>
+          <div class="content-BTNlogin"  @click="goRouter('works')">
+              打开作品
           </div>
-          <div class="content-BTNsignup">
-              <router-link :to="{ name: 'join' }" id="signupBtn">加入我们</router-link>
+          <div class="content-BTNsignup" @click="goRouter('join')">
+              加入我们
           </div>
       </div>
       <div class="loginBox" v-if="isLogin">
@@ -45,7 +45,6 @@
 <script>
 import store from '../store/store'
 import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
-// axios.defaults.withCredentials=true;
   export default{
     data(){
       return{
@@ -57,14 +56,21 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
       }
     },
     mounted(){
+      store.state.whatbg = true;
       if(getCookie('username')){
         this.loginBtn = require('../assets/img/home/BTN-LOG2.png')
+      }else{
+        this.loginBtn = require('../assets/img/home/BTN-LOG1.png')
       }
     },
     methods:{
+      goRouter(path){
+        this.$router.push({
+          path:'/'+path
+        })
+      },
       admin(){
         if(getCookie('username')){
-          this.username = getCookie('username')
           this.$router.push({
             path:'/admin',
           })
@@ -99,10 +105,6 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
             this.loginFalse = true
           });
       },
-      changeBg(){
-        store.state.whatBg=false
-      }
-
     }
   }
 </script>

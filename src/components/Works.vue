@@ -2,16 +2,16 @@
   <div id="works">
 	<Head></Head>
 	<div id="content">
-		<ul class="center">
-			<li v-for="(item,index) in workslist">
-				<img :src="item.image"/>
-				<div class="center-intro">
-					<p style="color:#378cff;font-size:0.24rem;">{{item.name}}</p>
+    <ul class="worksList">
+      <li class="workItem" v-for="(item,index) in worksList" :key='index'>
+        <img :src="item.image"/>
+        <div class="workCon">
+          <p style="color:#378cff;font-size:0.24rem;">{{item.name}}</p>
           <div class="line"></div>
-					<p style="font-size: 0.17rem;">{{item.description}}</p>
-				</div>
-			</li>
-		</ul>
+          <p style="font-size: 0.17rem;">{{item.description}}</p>
+        </div>
+      </li>
+    </ul>
 		<p class="content-hint">上下可滑动可查看</p>
 		<div class="content-BTNtouch">
               <router-link :to="{ name: 'touch' }" id="touchBtn">联系我们</router-link>
@@ -30,14 +30,15 @@
 		},
 		data(){
 			return{
-				workslist:[],
+				worksList:[],
 			}
 		},
-		mounted(){
+		created(){
       store.state.whatBg = false
 			axios.get('https://vtmer.erienniu.xyz/api/list')
 			.then(res=>{
-				this.workslist = res.data.data
+        console.log(res);
+				this.worksList = res.data.data
 			})
 			.catch(error=>{
 				console.log(error);
@@ -45,42 +46,34 @@
 		},
 	}
 </script>
-<style>
-.center{
+<style scoped>
+ul{
   width: 5.49rem;
     height: 5.9rem;
-    overflow: hidden;
+    overflow-x: hidden;
     top: 14.74%;
     left: 13.2%;
     position: absolute;
     /* border: 1px solid red; */
-    overflow: auto;
+    overflow-y: scroll;
 }
-.center-intro hr{
-  width:40%;
-  margin-top: 0.05rem;
-  margin-bottom: 0.05rem;
+.workCon{
+  width: 3.54rem;
+  font-size: 0;
+  position: relative;
+  padding-left: .31rem;
 }
-.center img{
-  width: 1.95rem;
-  height: 1.45rem;
-  box-shadow: 1px 1px 1px #dadada;
-}
-.center li{
+.workItem{
   width: 5.49rem;
   height: 1.45rem;
   margin: 0 auto;
   margin-bottom: 0.37rem;
   display: flex;
 }
-.center-intro{
-  margin-left: 0.5rem;
-}
-.center-intro p:first-child{
-  font-size: .24rem;
-  color:#378cff;
-  font-size:0.24rem;
-  position: relative;
+.workItem img{
+  width: 1.95rem!important;
+  height: 1.45rem;
+  box-shadow: 1px 1px 1px #dadada;
 }
 .line{
   width: 1.79rem;

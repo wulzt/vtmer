@@ -1,22 +1,25 @@
 <template>
   <div id="admin">
-    <Head></Head>
-    <div class="welcome">
-      <span>欢迎回家，VTMER!</span>
-      <input class="uploadWorks" name="uploadWorks" type="button" value="上传作品" @click="upload">
+    <div>
+      <Head></Head>
+      <div class="welcome">
+        <span>欢迎回家，VTMER!</span>
+        <input class="uploadWorks" name="uploadWorks" type="button" value="上传作品" @click="upload">
+      </div>
+      <ul class="worksList">
+        <li class="workItem" v-for="(item,index) in worksList">
+          <img :src="item.image"/>
+          <div class="workCon">
+            <p>
+              {{item.name}}
+            </p>
+            <input id="editWo" name="editWo" type="button" value="编辑" @click="editWo(index)">
+            <input id="deleteWo" name="deleteWo" type="button" value="删除" @click="deleteWo(index)">
+          </div>
+        </li>
+      </ul>
+
     </div>
-    <ul class="worksList">
-      <li class="workItem" v-for="(item,index) in worksList">
-        <img :src="item.image"/>
-        <div class="workCon">
-          <p>
-            {{item.name}}
-          </p>
-          <input id="editWo" name="editWo" type="button" value="编辑" @click="editWo(index)">
-          <input id="deleteWo" name="deleteWo" type="button" value="删除" @click="deleteWo(index)">
-        </div>
-      </li>
-    </ul>
     <div class="deleteBox" v-if="isDelete">
       <div class="mask"></div>
       <div class="deleteAlert">
@@ -130,6 +133,7 @@ import store from '../store/store'
   background-color: transparent;
 }
 .workCon{
+  width: 3.94rem;
   font-size: 0;
   position: relative;
 }
@@ -179,7 +183,7 @@ import store from '../store/store'
 .mask{
   width: 100%;
   height: 100%;
-  position: absolute;
+  position: fixed;
   z-index: 10;
   top: 0;
   left: 0;
@@ -191,7 +195,7 @@ import store from '../store/store'
   height: 4.92rem;
   border-radius: 0.24rem;
   background-color: rgb(255, 255, 255);
-  position: absolute;
+  position: fixed;
   top: 22.76%;
   left: 50%;
   transform: translateX(-50%);
