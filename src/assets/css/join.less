@@ -146,7 +146,7 @@
       }
     }
   }
-  .confirmClose,.applyErr,.CodeErr{
+  .confirmClose,.applyErr,.CodeErr,.sendCodeErr{
     p{
       color: rgb(255,92,100);
     }
@@ -164,7 +164,7 @@
       background-color: rgb(118,178,253);
     }
   }
-  .CodeErr{
+  .CodeErr,.sendCodeErr{
     .el-button{
       left: 1.05rem !important;
     }
@@ -270,7 +270,7 @@
       font-size: 0.24rem;
       width: 4.91rem;
       height: 4.73rem;
-      margin: 0.55rem auto 0;
+      margin: 0.38rem auto 0;
       .showFromLeft{
         transition: all 0.15s ease;
       }
@@ -411,7 +411,7 @@
           /*学院专业，联系方式*/
           .el-form-item23{
             width: 4.91rem;
-            margin: 0.44rem auto 0;
+            margin: 0.21rem auto 0;
             .el-form-item__label{
               height: 0.49rem;
               font-size: 0.21rem;
@@ -443,20 +443,33 @@
               line-height: 0.58rem;
             }
           }
+          .el-form-item__error{
+            font-size: 0.21rem;
+            top: 93%;
+          }
+          .contactInput{
+            .el-form-item__error{
+              top: -70%;
+              left: 30%;
+            }
+          }
           .contactbtns{
             position: relative;
             width: 4.91rem;
-            margin: 0.44rem auto 0;
-            height: 1.07rem;
-            .contactbtn{
+            margin: 0.29rem auto 0;
+            height: 0.60rem;
+            .codeInput{
               position: absolute;
               width: 2.80rem ;
               margin: 0;
-              .el-input{
-                width: 2.80rem
-              }
               .el-input__inner{
-                width: 2.80rem
+                width: 2.80rem;
+                height: 0.58rem;
+                line-height: 0.58rem;
+                border: 0.02rem solid #999999;
+                border-radius: 0.1rem;
+                font-size: 0.21rem;
+                padding: 0 0.2rem;
               }
             }
             .verification{

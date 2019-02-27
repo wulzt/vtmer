@@ -2,7 +2,7 @@
   <div id="join">
     <Head></Head>
     <div class="mask"></div>
-    <div class="mask2" v-if="confirmClose == true||applyErr == true||applySuccess == true||CodeErr == true"></div>
+    <div class="mask2" v-if="confirmClose == true||applyErr == true||applySuccess == true||CodeErr == true||sendCodeErr == true"></div>
     <div class="mainbody">
       <div class="upimg">
 
@@ -55,6 +55,7 @@
           <el-button @click="applySuccess = false">返回</el-button>
         </div>
       </div>
+      <!--提交失败弹窗-->
       <div class="CodeErr popframe" v-if="CodeErr">
         <div class="iconfont icon-guanbi" @click="CodeErr = false"></div>
         <p>
@@ -63,6 +64,17 @@
         </p>
         <div class="popBtns">
           <el-button @click="CodeErr = false">返回</el-button>
+        </div>
+      </div>
+      <!--验证码发送失败弹窗-->
+      <div class="sendCodeErr popframe" v-if="sendCodeErr">
+        <div class="iconfont icon-guanbi" @click="sendCodeErr = false"></div>
+        <p>
+          获取失败<br/>
+          请填写姓名和联系方式
+        </p>
+        <div class="popBtns">
+          <el-button @click="sendCodeErr = false">返回</el-button>
         </div>
       </div>
       <div class="mainForm">
@@ -113,7 +125,7 @@
             <el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign"
                      ref="formLabelAlign" :rules="rules" class="FupForm">
 
-              <el-row  style="margin-bottom: 10px">
+              <el-row  style="margin-bottom: 0">
                 <el-col :span="10"><!--9.775-->
                   <el-form-item label="姓名"
                                 prop="name" :rules="[{ required: true, message: '姓名不能为空'}]">
@@ -141,11 +153,12 @@
                             prop="major" :rules="[{required: true,message: '学院专业不能为空'}]">
                 <el-input v-model="formLabelAlign.major" form="FupForm" name="major" @change="judgeStatus"></el-input>
               </el-form-item>
+              <el-form-item label="联系方式" class="el-form-item23 contactInput"
+                            prop="contact" >
+                <el-input v-model.number="formLabelAlign.contact" form="FupForm" name="contact" @change="judgeStatus" @blur="judgeSendCode()" :disabled="canContact"></el-input>
+              </el-form-item>
               <div class="contactbtns">
-                <el-form-item label="联系方式" class="el-form-item23 contactbtn"
-                              prop="contact" >
-                  <el-input v-model.number="formLabelAlign.contact" form="FupForm" name="contact" @change="judgeStatus" @blur="judgeSendCode()" :disabled="canContact"></el-input>
-                </el-form-item>
+                <el-input  class="codeInput" v-model.number="formLabelAlign.code" placeholder="请输入验证码" @change="judgeStatus"></el-input>
                 <button class="verification" @click.prevent="sendCode" :disabled="sendCodebtn">{{btntxt}}</button>
               </div>
               <p class="item-form-end">记得上传你的专属头像</p>
@@ -228,6 +241,7 @@
         applySuccess:false,//成功弹框
         applyErr:false,//重复弹框
         CodeErr:false,//验证码错误弹框
+        sendCodeErr:false,//验证码发送失败弹窗
         contactisTrue:false,
         btntxt:'获取验证码',
         time:0,
@@ -263,6 +277,7 @@
       popSuccess(){this.applySuccess = true;},
       popRepeat(){this.applyErr = true;},
       codeWrong(){this.CodeErr = true},
+      sendCodeWrong(){this.sendCodeErr = true},
       /*图片上传*/
       imgPreview(file){
         const isLt2M = file.size / 1024 / 1024 < 2;
@@ -328,8 +343,6 @@
           });
       },
       sendCode(){
-        //发送验证码期间不能修改号码
-        this.canContact = true;
         let phoneData = new FormData();
         phoneData.append('group',this.group);
         phoneData.append('name',this.name);
@@ -345,7 +358,8 @@
             this.cansendCode();
           }
           if(response.status == 400){
-            /*验证码发送失败，禁用1分钟按钮，弹框？*/
+            /*验证码发送失败，弹框*/
+            this.sendCodeWrong();
           }
         }).catch(function (error) {
 
@@ -353,6 +367,8 @@
       },
       /*禁用获得验证码按钮*/
       cansendCode(){
+        //发送验证码期间不能修改号码
+        this.canContact = true;
         this.time = 60;
         this.sendCodebtn = true;
         this.timer();
@@ -370,13 +386,9 @@
           this.canContact = false;
         }
       },
-      /*验证码错误*/
-      codeWrong(){
-
-      },
       judgeStatus(){
         let User = this.formLabelAlign;
-        if(User.name == ""||User.gender == ""||User.major == ""||User.contact == ""){
+        if(User.name == ""||User.gender == ""||User.major == ""||User.contact == ""||User.code == ""){
           this.btnStatus.btndisable = true;
           this.btnStatus.btnClass = "";
         }else{
