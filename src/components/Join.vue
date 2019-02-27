@@ -138,10 +138,10 @@
                 <el-col :span="10">
                   <el-form-item label="性别" class="nopadding" :rules="[{required: true}]">
                     <el-radio-group v-model="formLabelAlign.gender" @change="judgeStatus" form="FupForm" name="gender">
-                      <el-radio label="1">
+                      <el-radio label="2">
                         <i class="iconfont icon-girl"></i>
                       </el-radio>
-                      <el-radio label="2">
+                      <el-radio label="1">
                         <i class="iconfont icon-boy"></i>
                       </el-radio>
                     </el-radio-group>

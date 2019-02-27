@@ -45,9 +45,9 @@
 				</div>
 			</li>
 		</ul>
-		<div class="BTNhome">
-              <router-link :to="{ name: 'home' }" id="touchBtn">回到首页</router-link>
-        </div>
+		<div class="BTNhome" @click='goHome()'>
+        回到首页
+    </div>
     </div>
 </template>
 <script>
@@ -84,16 +84,19 @@
 			},
 			onError: function (e) {
 				console.log('无法复制文本！')
+			},
+			goHome(){
+				store.state.whatBg=true
+				this.$router.push({
+					path: '/',
+				})
 			}
 		}
 	}
 </script>
-<style>
+<style scoped>
 	#touch{
 		overflow: hidden;
-	}
-	.BTNhome a{
-		color:#378cff
 	}
 	.BTNhome{
 		width: 2.16rem;
@@ -106,6 +109,7 @@
 		position: absolute;
 		/* top: 80.6%; */
 		left: 36%;
+		color:#378cff;
 	}
 	.linkmans{
 		width: 7.4rem;

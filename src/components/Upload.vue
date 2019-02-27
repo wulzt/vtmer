@@ -4,12 +4,14 @@
     <div class="editImg">
         <el-upload
           class="avatar-uploader"
-          action="https://vtmer.erienniu.xyz/api/upload"
-          name="work"
+          action="https://vtmer.erienniu.xyz/api/new"
           :show-file-list="false"
           :on-change="imgPreview"
           :auto-upload="false">
           <img v-if="imageUrl" :src="imageUrl" class="avatar">
+          <div v-else class="imgDefault">
+            <img src="../assets/img/administrate/editImg.png" alt="">
+          </div>
         </el-upload>
       <div class="ImgText">
         <p>点击左侧<br/>上传/替换图片</p>
@@ -17,16 +19,14 @@
       </div>
     </div>
     <div class="editForm">
-      <form>
-        <div class="editText">
-          <input type="text" name="title" placeholder="请在此输入标题" v-model="workname"/>
-          <p>注：标题为6-12字符为宜</p>
-        </div>
-        <div class="editUrl">
-          <textarea cols="" rows="" name="url" placeholder="在此输入简介" maxlength="100"  v-model="workurl"></textarea>
-          <p>注：简介为32~48字符为宜。</p>
-        </div>
-      </form>
+      <div class="editText">
+        <input type="text" placeholder="请在此输入标题" v-model="workname"/>
+        <p>注：标题为6-12字符为宜</p>
+      </div>
+      <div class="editUrl">
+        <textarea cols="" rows="" placeholder="在此输入简介" maxlength="100"  v-model="description"></textarea>
+        <p>注：简介为32~48字符为宜。</p>
+      </div>
       <footer class="editBtn">
         <div class="editUpload" @click="upload()">
           完成
@@ -71,7 +71,7 @@ export default{
     return{
       isCancel: false,
       workname:'',
-      workurl:'',
+      description:'',
       imageUrl: '',
       file:'',
       name:'',
@@ -84,7 +84,7 @@ export default{
       this.isUpdate = true
       this.workname = store.state.editItem.name
       this.imageUrl = store.state.editItem.image
-      this.workurl = store.state.editItem.description
+      this.description = store.state.editItem.description
     }
   },
   methods:{
@@ -100,7 +100,7 @@ export default{
     upload(){
       let data = new FormData();
       data.append('name', this.workname);
-      data.append('description', this.workurl);
+      data.append('description', this.description);
       data.append('image', this.file);
 
       if(this.isUpdate){
@@ -125,18 +125,18 @@ export default{
 
           });
       }else{
-        this.axios({
-          method: 'post',
-          url: 'https://vtmer.erienniu.xyz/api/new',
+        console.log(data);
+        this.axios.post('https://vtmer.erienniu.xyz/api/new', data, {
           headers: {
-            'Content-type': 'multipart/form-data'
-          },
-          data: data
+            'Content-Type': 'multipart/form-data'
+          }
         })
           .then((res) => {
-            this.$router.push({
-              path:'/admin'
-            })
+            console.log(res);
+            alert('上传成功');
+            // this.$router.push({
+            //   path:'/admin'
+            // })
 
           })
           .catch((error) => {
@@ -319,5 +319,9 @@ input:focus,textarea:focus{
   margin-top: 1.27rem;
   display: flex;
   justify-content: space-between;
+}
+.imgDefault{
+  width: 2.9rem;
+  height: 2.17rem;
 }
 </style>
