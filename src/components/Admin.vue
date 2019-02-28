@@ -34,9 +34,9 @@
             "{{worksList[currentIndex].name}}"
           </p>
           <div class="deleteBTN">
-            <div class="deleteYes" @click="dddddelete()">
+            <button class="deleteYes" @click="dddddelete()">
               删除
-            </div>
+            </button>
             <div class="deleteNo" @click="isDelete=false">
               取消
             </div>
