@@ -28,7 +28,7 @@
         <p>注：简介为32~48字符为宜。</p>
       </div>
       <footer class="editBtn">
-        <div class="editUpload" @click="upload()">
+        <div class="editUpload" @click="upload">
           完成
         </div>
         <div class="editCancel" @click="isCancel=true">
@@ -103,6 +103,10 @@ export default{
       data.append('description', this.description);
       data.append('image', this.file);
 
+      let self = this;
+      //***********************************
+      console.log(this.isUpdate);
+      //***********************************
       if(this.isUpdate){
         this.axios({
           method: 'post',
@@ -114,7 +118,7 @@ export default{
         })
           .then((res) => {
             store.state.editItem=''
-            this.$router.push({
+            self.$router.push({
               path:'/admin'
             })
 
@@ -134,9 +138,9 @@ export default{
           .then((res) => {
             console.log(res);
             alert('上传成功');
-            // this.$router.push({
-            //   path:'/admin'
-            // })
+            self.$router.push({
+              path:'/admin'
+            })
 
           })
           .catch((error) => {

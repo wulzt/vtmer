@@ -357,7 +357,7 @@
           if(resstatus == 200){
             /*禁用获取验证码按钮1分钟，1小时5条，1天10条*/
             self.cansendCode();
-        }
+          }
           if(resstatus == 400){
             /*验证码发送失败，弹框*/
             self.sendCodeWrong();
@@ -432,5 +432,5 @@
 </script>
 
 <style lang="less">
-  @import "../assets/css/join.less";
+  @import "../assets/css/join";
 </style>
