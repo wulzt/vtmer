@@ -135,3 +135,10 @@
 #upload .el-icon-plus:before{
 
 }
+#upload .editUpload{
+  font-size : 0.24rem;
+  padding: 0;
+}
+#upload .deleteYes{
+  font-size: 0.24rem;
+}

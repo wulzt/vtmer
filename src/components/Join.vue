@@ -129,7 +129,7 @@
                 <el-col :span="10"><!--9.775-->
                   <el-form-item label="姓名"
                                 prop="name" :rules="[{ required: true, message: '姓名不能为空'}]">
-                    <el-input v-model="formLabelAlign.name" id="Username"  form='FupForm' name="name" @change="judgeStatus"></el-input>
+                    <el-input v-model="formLabelAlign.name" id="Username"  form='FupForm' name="name" @change="judgeStatus" @blur="scrolltoTop"></el-input>
                   </el-form-item>
                 </el-col>
 
@@ -151,14 +151,14 @@
 
               <el-form-item label="学院专业" class="el-form-item23"
                             prop="major" :rules="[{required: true,message: '学院专业不能为空'}]">
-                <el-input v-model="formLabelAlign.major" form="FupForm" name="major" @change="judgeStatus"></el-input>
+                <el-input v-model="formLabelAlign.major" form="FupForm" name="major" @change="judgeStatus" @blur="scrolltoTop"></el-input>
               </el-form-item>
               <el-form-item label="联系方式" class="el-form-item23 contactInput"
                             prop="contact" >
-                <el-input v-model.number="formLabelAlign.contact" form="FupForm" name="contact" @change="judgeStatus" @blur="judgeSendCode()" :disabled="canContact"></el-input>
+                <el-input v-model.number="formLabelAlign.contact" form="FupForm" name="contact" @change="judgeStatus" @blur="judgeSendCode" :disabled="canContact"></el-input>
               </el-form-item>
               <div class="contactbtns">
-                <el-input  class="codeInput" v-model="formLabelAlign.code" placeholder="请输入验证码" @change="judgeStatus"></el-input>
+                <el-input  class="codeInput" v-model="formLabelAlign.code" placeholder="请输入验证码" @change="judgeStatus" @blur="scrolltoTop"></el-input>
                 <button class="verification" @click.prevent="sendCode" :disabled="sendCodebtn">{{btntxt}}</button>
               </div>
               <p class="item-form-end">记得上传你的专属头像</p>
@@ -169,11 +169,11 @@
             <el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign">
 
               <el-form-item label="个人简介" class="el-form-item45">
-                <el-input type="textarea" v-model="formLabelAlign.description" @change="judgeDetails" class="FupForm" form="FupForm" name="description"></el-input>
+                <el-input type="textarea" v-model="formLabelAlign.description" @change="judgeDetails" class="FupForm" form="FupForm" name="description" @blur="scrolltoTop"></el-input>
               </el-form-item>
 
               <el-form-item label="个人经历" class="el-form-item45">
-                <el-input type="textarea" v-model="formLabelAlign.experience" @change="judgeDetails" form="FupForm" name="experience"></el-input>
+                <el-input type="textarea" v-model="formLabelAlign.experience" @change="judgeDetails" form="FupForm" name="experience" @blur="scrolltoTop"></el-input>
               </el-form-item>
 
               <p class="item-form-end">记得上传你的专属头像</p>
@@ -412,6 +412,10 @@
         if(this.contactisTrue == true){
           this.sendCodebtn = false;
         }
+        setTimeout(function() {
+          var scrollHeight = document.documentElement.scrollTop || document.body.scrollTop || 0;
+          window.scrollTo(0, Math.max(scrollHeight - 1, 0));
+        }, 100);
       },
       judgeDetails(){
         let User = this.formLabelAlign;
@@ -422,6 +426,16 @@
           this.btn2Status.btndisable = false;
           this.btn2Status.btnClass = "btn-useable";
         }
+      },
+      /*兼容ios键盘推动页面*/
+      scrolltoTop(){
+        setTimeout(function() {
+          var scrollHeight = document.documentElement.scrollTop || document.body.scrollTop || 0;
+          window.scrollTo(0, Math.max(scrollHeight - 1, 0));
+        }, 100);
+      },
+      sayhello(){
+        console.log("hello");
       }
     },
 

@@ -28,9 +28,9 @@
         <p>注：简介为32~48字符为宜。</p>
       </div>
       <footer class="editBtn">
-        <button class="editUpload" @click="upload" style="border: none">
+        <el-button class="editUpload" @click="upload">
           完成
-        </button>
+        </el-button>
         <div class="editCancel" @click="isCancel=true">
           取消
         </div>
@@ -141,10 +141,9 @@ export default{
             self.$router.push({
               path:'/admin'
             })
-
           })
           .catch((error) => {
-            console.log(error);
+            alert(error);
           });
       }
     },

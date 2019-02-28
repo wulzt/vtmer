@@ -34,12 +34,12 @@
             "{{worksList[currentIndex].name}}"
           </p>
           <div class="deleteBTN">
-            <button class="deleteYes" @click="dddddelete()">
+            <el-button class="deleteYes" @click="dddddelete()">
               删除
-            </button>
-            <div class="deleteNo" @click="isDelete=false">
+            </el-button>
+            <el-button class="deleteNo" @click="isDelete=false">
               取消
-            </div>
+            </el-button>
           </div>
         </div>
       </div>
