@@ -125,7 +125,7 @@ export default{
           })
           .catch((error) => {
             store.state.editItem=''
-            console.log(error);
+            alert(error);
 
           });
       }else{

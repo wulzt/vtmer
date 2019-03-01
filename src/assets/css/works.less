@@ -2,12 +2,11 @@
   .center{
     width: 5.49rem;
     height: 7rem;
-    overflow: hidden;
     top: 14.74%;
     left: 13.2%;
     position: absolute;
-    /* border: 1px solid red; */
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: scroll;
   }
   .center-intro {
     ht{
@@ -62,19 +61,21 @@
     border-radius: 1.0667rem;
     font-size: 0.24rem;
     position: absolute;
-    top: 80.6%;
+    bottom: -1.05rem;
     left: 36%;
   }
   .content-BTNtouch a{
     color:#33d066
   }
   .content-hint{
+    position: absolute;
     font-size: 0.2rem;
-    position: relative;
-    top: 9rem;
+    bottom: 0;
     left: 50%;
     color: #9c9c9c;
-    position: absolute;
   }
-
+  #content{
+    position: relative;
+    height: 9rem;
+  }
 }

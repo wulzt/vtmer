@@ -18,7 +18,12 @@
 			     			<div class="touchPhone">
 			                    <img src="../assets/img/touch/phoneIcon.png">
 			                    <div class="number">{{item.contact}}</div>
-			                    <div class="call">拨号</div>
+			                    <!-- <div class="call">拨号</div> -->
+
+													<button type="button" @click='copy(item.contact)' class="call copy"
+													 v-clipboard:copy="message"
+													 v-clipboard:success="onCopy"
+													 v-clipboard:error="onError">拨号</button>
 			                </div>
 			     		</div>
 			     		<div class="touchwayBox">
@@ -185,19 +190,19 @@
 	.call,
 	.copy {
 	  width: 1.12rem;
-	  border: 0.018rem solid #33d066;
+		color: #378cff;
+	  border: 0.018rem solid #378cff;
 	  border-radius: 0.6rem;
 	  line-height: 0.3rem;
 	  text-align: center;
 	  font-size: 0.16rem;
-	  color: #33d066;
 	  position: absolute;
 	  margin-top: -0.35rem;
 	  left: 78%;
 		background-color: transparent;
 	}
-	.copy {
-	  color: #378cff;
-	  border: 0.018rem solid #378cff;
+	.call {
+		color: #33d066;
+		border: 0.018rem solid #33d066;
 	}
 </style>

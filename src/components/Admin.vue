@@ -101,7 +101,7 @@ import store from '../store/store'
             this.reload()
           }, res => {
             // 错误回调
-            console.log(res);
+            alert(res);
           })
       }
     }
