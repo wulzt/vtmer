@@ -169,11 +169,11 @@
             <el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign">
 
               <el-form-item label="个人简介" class="el-form-item45">
-                <el-input type="textarea" v-model="formLabelAlign.description" @change="judgeDetails" class="FupForm" form="FupForm" name="description" @blur="scrolltoTop"></el-input>
+                <el-input type="textarea" v-model="formLabelAlign.description" @blur="judgeDetails" class="FupForm" form="FupForm" name="description"></el-input>
               </el-form-item>
 
               <el-form-item label="个人经历" class="el-form-item45">
-                <el-input type="textarea" v-model="formLabelAlign.experience" @change="judgeDetails" form="FupForm" name="experience" @blur="scrolltoTop"></el-input>
+                <el-input type="textarea" v-model="formLabelAlign.experience" @blur="judgeDetails" form="FupForm" name="experience" ></el-input>
               </el-form-item>
 
               <p class="item-form-end">记得上传你的专属头像</p>
@@ -412,10 +412,7 @@
         if(this.contactisTrue == true){
           this.sendCodebtn = false;
         }
-        setTimeout(function() {
-          var scrollHeight = document.documentElement.scrollTop || document.body.scrollTop || 0;
-          window.scrollTo(0, Math.max(scrollHeight - 1, 0));
-        }, 100);
+        this.scrolltoTop();
       },
       judgeDetails(){
         let User = this.formLabelAlign;
@@ -426,17 +423,15 @@
           this.btn2Status.btndisable = false;
           this.btn2Status.btnClass = "btn-useable";
         }
+        this.scrolltoTop();
       },
       /*兼容ios键盘推动页面*/
       scrolltoTop(){
         setTimeout(function() {
           var scrollHeight = document.documentElement.scrollTop || document.body.scrollTop || 0;
           window.scrollTo(0, Math.max(scrollHeight - 1, 0));
-        }, 100);
+        }, 300);
       },
-      sayhello(){
-        console.log("hello");
-      }
     },
 
     components:{

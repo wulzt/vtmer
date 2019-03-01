@@ -28,9 +28,9 @@
         <p>注：简介为32~48字符为宜。</p>
       </div>
       <footer class="editBtn">
-        <el-button class="editUpload" @click="upload">
+        <div class="editUpload" @click="upload">
           完成
-        </el-button>
+        </div>
         <div class="editCancel" @click="isCancel=true">
           取消
         </div>
