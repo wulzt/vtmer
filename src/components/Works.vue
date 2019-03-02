@@ -34,6 +34,8 @@
       duration: 600,
       delay: 500
     },
+    maxWidth:'1000px',
+    maxHeight:'1000px',
     previewSize: 2,
   });
 
