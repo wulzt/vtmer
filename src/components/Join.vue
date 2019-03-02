@@ -20,6 +20,7 @@
           <img src="../assets/img/apply/headbg.png" alt="headbg" class="headbg"/>
         </el-upload>
       </div>
+      <!-- 放弃报名 -->
       <div class="confirmClose popframe" v-if="confirmClose">
         <div class="iconfont icon-guanbi" @click="confirmClose = false"></div>
         <p>
@@ -129,7 +130,7 @@
                 <el-col :span="10"><!--9.775-->
                   <el-form-item label="姓名"
                                 prop="name" :rules="[{ required: true, message: '姓名不能为空'}]">
-                    <el-input v-model="formLabelAlign.name" id="Username"  form='FupForm' name="name" @change="judgeStatus"></el-input>
+                    <el-input v-model="formLabelAlign.name" id="Username"  form='FupForm' name="name" @change="judgeStatus" @blur="scrolltoTop"></el-input>
                   </el-form-item>
                 </el-col>
 
@@ -151,15 +152,18 @@
 
               <el-form-item label="学院专业" class="el-form-item23"
                             prop="major" :rules="[{required: true,message: '学院专业不能为空'}]">
-                <el-input v-model="formLabelAlign.major" form="FupForm" name="major" @change="judgeStatus"></el-input>
+                <el-input v-model="formLabelAlign.major" form="FupForm" name="major" @change="judgeStatus" @blur="scrolltoTop"></el-input>
               </el-form-item>
               <el-form-item label="联系方式" class="el-form-item23 contactInput"
                             prop="contact" >
-                <el-input v-model.number="formLabelAlign.contact" form="FupForm" name="contact" @change="judgeStatus" @blur="judgeSendCode()" :disabled="canContact"></el-input>
+                <el-input v-model.number="formLabelAlign.contact" form="FupForm" name="contact" @change="judgeStatus" @blur="judgeSendCode" :disabled="canContact"></el-input>
               </el-form-item>
               <div class="contactbtns">
-                <el-input  class="codeInput" v-model="formLabelAlign.code" placeholder="请输入验证码" @change="judgeStatus"></el-input>
-                <button class="verification" @click.prevent="sendCode" :disabled="sendCodebtn">{{btntxt}}</button>
+                <el-input  class="codeInput" v-model="formLabelAlign.code" placeholder="请输入验证码" @change="judgeStatus" @blur="scrolltoTop"></el-input>
+                <button class="verification" @click.prevent="sendCode" :disabled="sendCodebtn"
+                  v-loading.fullscreen.lock="fullscreenLoading">
+                    {{btntxt}}
+                </button>
               </div>
               <p class="item-form-end">记得上传你的专属头像</p>
 
@@ -169,11 +173,11 @@
             <el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign">
 
               <el-form-item label="个人简介" class="el-form-item45">
-                <el-input type="textarea" v-model="formLabelAlign.description" @change="judgeDetails" class="FupForm" form="FupForm" name="description"></el-input>
+                <el-input type="textarea" v-model="formLabelAlign.description" @blur="judgeDetails" class="FupForm" form="FupForm" name="description"></el-input>
               </el-form-item>
 
               <el-form-item label="个人经历" class="el-form-item45">
-                <el-input type="textarea" v-model="formLabelAlign.experience" @change="judgeDetails" form="FupForm" name="experience"></el-input>
+                <el-input type="textarea" v-model="formLabelAlign.experience" @blur="judgeDetails" form="FupForm" name="experience" ></el-input>
               </el-form-item>
 
               <p class="item-form-end">记得上传你的专属头像</p>
@@ -186,7 +190,8 @@
           <el-button style="" @click="prev" v-if="active === 2||active === 3" class="prev-btn">上一步</el-button>
           <el-button v-if="active === 1" style="opacity: 0;" disabled></el-button>
           <el-button style="" @click="next" v-if="active === 1||active === 2" class="next-btn" :disabled="btnStatus.btndisable" :class="btnStatus.btnClass">下一步</el-button>
-          <el-button style="" @click="finish" v-if="active === 3" class="finish-btn" :disabled="btn2Status.btndisable" :class="btn2Status.btnClass">完成</el-button>
+          <el-button style="" @click="finish" v-if="active === 3" class="finish-btn" :disabled="btn2Status.btndisable" :class="btn2Status.btnClass"
+            v-loading.fullscreen.lock="fullscreenLoading">完成</el-button>
         </div>
       </div>
     </div>
@@ -221,6 +226,8 @@
         }
       };
       return {
+        fullscreenLoading: false,
+        submitLoading: false,
         imageUrl:'',
         active: 1,//当前步骤
         labelPosition:'top',//表单文字布局（top/left）
@@ -308,6 +315,7 @@
       },
       /*完成*/
       finish(){
+        this.fullscreenLoading = true;
         let User = this.formLabelAlign;
         let upData = new FormData();
         for(let i in User){
@@ -325,9 +333,16 @@
           }
         })
           .then(function (response) {
+            console.log(response);
+            self.fullscreenLoading = false;
             let resstatus = JSON.parse(response.request.response).status;
+            console.log(resstatus);
             if(resstatus === 200){
               self.popSuccess();
+            }
+            /*data不对*/
+            if(resstatus === 400){
+              alert('报名失败，请先上传头像');
             }
             /*重复注册*/
             if(resstatus === 404){
@@ -343,6 +358,9 @@
           });
       },
       sendCode(){
+        //loading
+        this.fullscreenLoading = true;
+
         let phoneData = new FormData();
         phoneData.append('group',this.formLabelAlign.group);
         phoneData.append('name',this.formLabelAlign.name);
@@ -353,11 +371,12 @@
             'Content-Type': 'multipart/form-data'
           }
         }).then(function (response) {
+          self.fullscreenLoading = false;
           let resstatus = JSON.parse(response.request.response).status;
           if(resstatus == 200){
             /*禁用获取验证码按钮1分钟，1小时5条，1天10条*/
             self.cansendCode();
-        }
+          }
           if(resstatus == 400){
             /*验证码发送失败，弹框*/
             self.sendCodeWrong();
@@ -412,6 +431,7 @@
         if(this.contactisTrue == true){
           this.sendCodebtn = false;
         }
+        this.scrolltoTop();
       },
       judgeDetails(){
         let User = this.formLabelAlign;
@@ -422,7 +442,15 @@
           this.btn2Status.btndisable = false;
           this.btn2Status.btnClass = "btn-useable";
         }
-      }
+        this.scrolltoTop();
+      },
+      /*兼容ios键盘推动页面*/
+      scrolltoTop(){
+        setTimeout(function() {
+          var scrollHeight = document.documentElement.scrollTop || document.body.scrollTop || 0;
+          window.scrollTo(0, Math.max(scrollHeight - 1, 0));
+        }, 300);
+      },
     },
 
     components:{
@@ -432,5 +460,5 @@
 </script>
 
 <style lang="less">
-  @import "../assets/css/join.less";
+  @import "../assets/css/join";
 </style>
