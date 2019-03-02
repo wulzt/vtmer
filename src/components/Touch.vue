@@ -5,14 +5,17 @@
 			<li v-for="(item,index) in list" :key='index'>
 				<div class="linkmans">
 					<div class="linkmanItr">
-								<div class="avatarBox">
-									<img :src="item.avatar" />
-								</div>
-	             	<div class="name">
-	                 	<span class='chinesename'>{{item.Chinese_name}}</span>
-	                 	<span class='englishname'>{{item.english_name}}</span>
-	             	</div>
-		        </div>
+            <div class="bgBox">
+              <div class="avatarBox">
+                <img :src="item.avatar" />
+              </div>
+            </div>
+              <div class="name">
+                <span class='chinesename'>{{item.Chinese_name}}</span>
+                <span class='englishname'>{{item.english_name}}</span>
+              </div>
+
+            </div>
 			     	<div class="bigBox">
 			     		<div class="touchwayBox">
 			     			<div class="touchPhone">
@@ -103,6 +106,44 @@
 	#touch{
 		overflow: hidden;
 	}
+  .bgBox{
+    @avatarH_:1.7rem;
+    @sqt3_:1.73205080;
+    position: relative;
+    width: calc(~'@{sqt3_} * @{avatarH_} / 2');
+    height: @avatarH;
+    margin: 0 20px 20px 0.5rem;
+
+    clip-path: polygon(
+      0 25%,
+      50% 0,
+      100% 25%,
+      100% 75%,
+      50% 100%,
+      0 75%
+    );
+    background-color: rgb(129,167,253);
+  }
+  .avatarBox{
+    @avatarH:1.6rem;
+    @sqt3:1.73205080;
+    position: relative;
+    width: calc(~'@{sqt3} * @{avatarH} / 2');
+    height: @avatarH;
+    margin: 3px 3px 3px 3px;
+
+    clip-path: polygon(
+      0 25%,
+      50% 0,
+      100% 25%,
+      100% 75%,
+      50% 100%,
+      0 75%
+    );
+    overflow: hidden;
+    background-color: #ffffff;
+  }
+
 	.BTNhome{
 		width: 2.16rem;
 		height: 0.46rem;
@@ -152,7 +193,7 @@
 	  display: flex;
 	  display: -webkit-flex; /* Safari */
 	  flex-direction: column;
-	  margin-left:0.67rem;
+	  margin-left:0.5rem;
 	}
 	.touchwayBox {
 	  width: 8rem;

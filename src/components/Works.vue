@@ -5,7 +5,7 @@
       <ul class="center">
         <li v-for="(item,index) in workslist">
           <div class="imgcontainer">
-            <img :src="item.image" class="centerimg"/>
+            <img v-image-preview :src="item.image" class="centerimg"/>
           </div>
           <div class="center-intro">
             <p style="color:#378cff;font-size:0.24rem;">{{item.name}}</p>
@@ -25,6 +25,13 @@
   import Head from './Head'
   import axios from 'axios'
   import store from '../store/store'
+
+  import Vue from 'vue'
+  import VueDirectiveImagePreviewer from 'vue-directive-image-previewer'
+  import 'vue-directive-image-previewer/dist/assets/style.css'
+  Vue.use(VueDirectiveImagePreviewer);
+
+
   export default{
     name:'works',
     components:{
