@@ -29,7 +29,13 @@
   import Vue from 'vue'
   import VueDirectiveImagePreviewer from 'vue-directive-image-previewer'
   import 'vue-directive-image-previewer/dist/assets/style.css'
-  Vue.use(VueDirectiveImagePreviewer);
+  Vue.use(VueDirectiveImagePreviewer,{
+    animate: {
+      duration: 600,
+      delay: 500
+    },
+    previewSize: 2,
+  });
 
 
   export default{
