@@ -38,6 +38,9 @@ export default {
 </script>
 
 <style>
+.el-loading-mask{
+  background-color: rgba(255,255,255,.3)!important;
+}
 @font-face {
   font-family: "FZZHJW";
   src: url('./assets/fonts/FZZHJW.ttf');
