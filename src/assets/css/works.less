@@ -78,4 +78,24 @@
     position: relative;
     height: 9rem;
   }
+  .layer{
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,0.7);
+    z-index: 998;
+    position: fixed;
+    display: flex;
+    align-items: center;
+  }
+  .zoomImg{
+    width: 100%;
+    line-height: 100%;
+  }
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+  }
+
 }

@@ -5,11 +5,18 @@
 			<li v-for="(item,index) in list" :key='index'>
 				<div class="linkmans">
 					<div class="linkmanItr">
-            <div class="bgBox">
-              <div class="avatarBox">
-                <img :src="item.avatar" />
+            <div class="avatarBox">
+              <div class="boxF">
+                <div class="boxS">
+                  <div class="boxT" :style="{backgroundImage: 'url('+item.avatar+')'}">
+                    <div class="overlay">
+                      <a href="#">+</a>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
+
               <div class="name">
                 <span class='chinesename'>{{item.Chinese_name}}</span>
                 <span class='englishname'>{{item.english_name}}</span>
@@ -102,46 +109,86 @@
 		}
 	}
 </script>
-<style scoped>
+<style scoped lang="less">
 	#touch{
 		overflow: hidden;
 	}
-  .bgBox{
-    @avatarH_:1.7rem;
-    @sqt3_:1.73205080;
-    position: relative;
-    width: calc(~'@{sqt3_} * @{avatarH_} / 2');
-    height: @avatarH;
-    margin: 0 20px 20px 0.5rem;
 
-    clip-path: polygon(
-      0 25%,
-      50% 0,
-      100% 25%,
-      100% 75%,
-      50% 100%,
-      0 75%
-    );
-    background-color: rgb(129,167,253);
-  }
-  .avatarBox{
-    @avatarH:1.6rem;
-    @sqt3:1.73205080;
-    position: relative;
-    width: calc(~'@{sqt3} * @{avatarH} / 2');
-    height: @avatarH;
-    margin: 3px 3px 3px 3px;
-
-    clip-path: polygon(
-      0 25%,
-      50% 0,
-      100% 25%,
-      100% 75%,
-      50% 100%,
-      0 75%
-    );
+  .boxF, .boxS, .boxT, .overlay
+  {
+    width: 1.6rem;
+    height: 1.8rem;
     overflow: hidden;
-    background-color: #ffffff;
+  }
+  .boxF, .boxS
+  {
+    visibility: hidden;
+  }
+  .boxF
+  {
+    transform: rotate(120deg);
+    float: left;
+    margin-left: 10px;
+    -ms-transform: rotate(120deg);
+    -moz-transform: rotate(120deg);
+    -webkit-transform: rotate(120deg);
+  }
+  .boxS
+  {
+    transform: rotate(-60deg);
+    -ms-transform: rotate(-60deg);
+    -moz-transform: rotate(-60deg);
+    -webkit-transform: rotate(-60deg);
+  }
+  .boxT
+  {
+    transform: rotate(-60deg);
+    background: no-repeat 50% center;
+    background-size: 125% auto;
+    -ms-transform: rotate(-60deg);
+    -moz-transform: rotate(-60deg);
+    -webkit-transform: rotate(-60deg);
+    visibility: visible;
+  }
+  .overlay
+  {
+    transition: all 250ms ease-in-out 0s;
+    display: none;
+    position: relative;
+  }
+  .overlay:hover
+  {
+    background-color: rgba(0,0,0,0.6);
+  }
+  .boxT:hover .overlay
+  {
+    display: block;
+  }
+  .overlay a
+  {
+    display: inline-block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -16px 0 0 -16px;
+    border-radius: 3px;
+    background-color: #d3b850;
+    text-align: center;
+    line-height: 32px;
+    width: 32px;
+    height: 32px;
+    text-decoration: none;
+    color: White;
+    font-size: 18px;
+    font-weight: bolder;
+  }
+
+
+  .avatarBox{
+    position: relative;
+    width: 1.95rem;
+    height: 2.2rem;
+    margin: 0 20px 10px 0.5rem;
   }
 
 	.BTNhome{

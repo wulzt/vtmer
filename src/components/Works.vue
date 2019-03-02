@@ -1,11 +1,17 @@
 <template>
   <div id="works">
+    <transition name="fade">
+      <div v-if="showImg" class="layer" @click="closeImg()">
+        <img v-if="showImg" class="zoomImg" :src="nowImg" @click="closeImg()"/>
+      </div>
+    </transition>
     <Head></Head>
     <div id="content">
       <ul class="center">
         <li v-for="(item,index) in workslist">
           <div class="imgcontainer">
-            <img v-image-preview :src="item.image" class="centerimg"/>
+            <img :src="item.image"  @click="openImg($event)" class="centerimg"/>
+            <big-img v-if="showImg" @clickit="viewImg" :imgSrc="item.image"></big-img>
           </div>
           <div class="center-intro">
             <p style="color:#378cff;font-size:0.24rem;">{{item.name}}</p>
@@ -14,7 +20,7 @@
           </div>
         </li>
       </ul>
-      <p class="content-hint">上下可滑动可查看</p>
+      <p class="content-hint">上下可滑动可查看，点击放大</p>
       <div class="content-BTNtouch">
         <router-link :to="{ name: 'touch' }" id="touchBtn">联系我们</router-link>
       </div>
@@ -26,19 +32,6 @@
   import axios from 'axios'
   import store from '../store/store'
 
-  import Vue from 'vue'
-  import VueDirectiveImagePreviewer from 'vue-directive-image-previewer'
-  import 'vue-directive-image-previewer/dist/assets/style.css'
-  Vue.use(VueDirectiveImagePreviewer,{
-    animate: {
-      duration: 600,
-      delay: 500
-    },
-    maxWidth:'1000px',
-    maxHeight:'1000px',
-    previewSize: 2,
-  });
-
 
   export default{
     name:'works',
@@ -47,8 +40,20 @@
     },
     data(){
       return{
+        showImg:false,
+        nowImg:'',
         workslist:[],
       }
+    },
+    methods: {
+      openImg(e) {
+        this.showImg = true;
+        this.nowImg = e.currentTarget.src;
+        // 获取当前图片地址
+      },
+      closeImg(){
+        this.showImg = false;
+      },
     },
     mounted(){
       store.state.whatBg = false

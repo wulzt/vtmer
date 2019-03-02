@@ -7,7 +7,7 @@
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --disableHostCheck=true --open --port 80",
-    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+    "build": "webpack --mode production"
   },
   "dependencies": {
     "babel-plugin-component": "^1.1.1",
