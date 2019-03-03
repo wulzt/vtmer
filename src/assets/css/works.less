@@ -1,8 +1,16 @@
 #works{
+  overflow: hidden;
+  height:100%;
+  width:100%;
+  ::-webkit-scrollbar {/*电脑隐藏滚轮*/
+    display: none;
+  }
   .center{
     width: 5.49rem;
-    height: 7rem;
-    top: 14.74%;
+    height: 80%;
+    //height: 7rem;
+    top: 10%;
+    //top: 14.74%;
     left: 13.2%;
     position: absolute;
     overflow-x: hidden;
@@ -76,7 +84,8 @@
   }
   #content{
     position: relative;
-    height: 9rem;
+    height: 80%;
+    //height: 9rem;
   }
   .layer{
     height: 100%;
@@ -85,12 +94,37 @@
     z-index: 998;
     position: fixed;
     display: flex;
+    flex-direction: column;
     align-items: center;
+    text-align: start;
   }
   .zoomImg{
+    margin-top: 20%;
     width: 100%;
     line-height: 100%;
   }
+  .previewTitle{
+    margin: 3% 5% 3% 5%;
+    width: 90%;
+    font-size: 0.4rem;
+    color: #ffffff;
+    text-align: start;
+    overflow: hidden;
+  }
+  .previewTitle span {
+    padding-bottom: 0.3rem;
+    display: inline-block;
+    border-bottom: #409EFF solid 2px;
+  }
+  .previewDesc{
+    margin: 1% 5% 3% 5%;
+    width: 90%;
+    font-size: 0.3rem;
+    color: #ffffff;
+    text-align: start;
+    overflow: hidden;
+  }
+
   .fade-enter-active, .fade-leave-active {
     transition: opacity .5s;
   }

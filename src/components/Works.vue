@@ -2,7 +2,9 @@
   <div id="works">
     <transition name="fade">
       <div v-if="showImg" class="layer" @click="closeImg()">
-        <img v-if="showImg" class="zoomImg" :src="nowImg" @click="closeImg()"/>
+        <img v-if="showImg" class="zoomImg" :src="nowImg"/>
+        <p v-if="showImg" class="previewTitle"><span>{{nowTitle}}</span></p>
+        <p v-if="showImg" class="previewDesc">{{nowDesc}}</p>
       </div>
     </transition>
     <Head></Head>
@@ -10,13 +12,12 @@
       <ul class="center">
         <li v-for="(item,index) in workslist">
           <div class="imgcontainer">
-            <img :src="item.image"  @click="openImg($event)" class="centerimg"/>
-            <big-img v-if="showImg" @clickit="viewImg" :imgSrc="item.image"></big-img>
+            <img :id="'img-'+index"  :src="item.image"  @click="openImg($event)" class="centerimg"/>
           </div>
           <div class="center-intro">
-            <p style="color:#378cff;font-size:0.24rem;">{{item.name}}</p>
+            <p :ref="'name-'+index" style="color:#378cff;font-size:0.24rem;">{{item.name}}</p>
             <div class="line"></div>
-            <p style="font-size: 0.17rem;" class="worksDescription">{{item.description}}</p>
+            <p  :ref="'desc-'+index" style="font-size: 0.17rem;" class="worksDescription">{{item.description}}</p>
           </div>
         </li>
       </ul>
@@ -42,6 +43,8 @@
       return{
         showImg:false,
         nowImg:'',
+        nowTitle:'新生专题网',
+        nowDesc:'desc',
         workslist:[],
       }
     },
@@ -49,6 +52,9 @@
       openImg(e) {
         this.showImg = true;
         this.nowImg = e.currentTarget.src;
+        let index = e.currentTarget.getAttribute('id').split("-")[1];
+        this.nowTitle = this.$refs["name-"+index][0].innerText;
+        this.nowDesc = this.$refs["desc-"+index][0].innerText;
         // 获取当前图片地址
       },
       closeImg(){
