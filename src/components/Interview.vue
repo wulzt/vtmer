@@ -20,7 +20,7 @@ import store from '../store/store'
     methods:{
       isCheck(){
         let self = this
-        this.axios.get('https://vtmer.erienniu.xyz/api/check-queue')
+        this.axios.get(this.$store.state.backendUrl+'/api/check-queue')
           .then(function (res) {
             // handle success
             if(res.data.status==200){

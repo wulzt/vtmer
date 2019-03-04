@@ -4,7 +4,7 @@
     <div class="editImg">
         <el-upload
           class="avatar-uploader"
-          action="https://vtmer.erienniu.xyz/api/new"
+          :action="newUrl"
           :show-file-list="false"
           :on-change="imgPreview"
           :auto-upload="false">
@@ -68,6 +68,7 @@ export default{
     Head,
   },
   data(){
+    this.newUrl;
     return{
       isCancel: false,
       workname:'',
@@ -79,6 +80,7 @@ export default{
     }
   },
   created(){
+    this.newUrl = this.$store.state.backendUrl+"/api/new";
     store.state.whatBg=false;
     if(store.state.editItem){
       this.isUpdate = true
@@ -110,7 +112,7 @@ export default{
       if(this.isUpdate){
         this.axios({
           method: 'post',
-          url: 'https://vtmer.erienniu.xyz/api/update/'+store.state.editItem.id,
+          url: this.$store.state.backendUrl+'/api/update/'+store.state.editItem.id,
           headers: {
             'Content-type': 'multipart/form-data'
           },
@@ -130,7 +132,7 @@ export default{
           });
       }else{
         console.log(data);
-        this.axios.post('https://vtmer.erienniu.xyz/api/new', data, {
+        this.axios.post(this.$store.state.backendUrl+'/api/new', data, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }

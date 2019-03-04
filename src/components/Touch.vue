@@ -30,7 +30,7 @@
 			                    <div class="number">{{item.contact}}</div>
 			                    <!-- <div class="call">拨号</div> -->
 
-													<button type="button" @click='copy(item.contact)' class="call copy"
+													<button type="button" @click='call(item.contact)' class="call copy"
 													 v-clipboard:copy="message"
 													 v-clipboard:success="onCopy"
 													 v-clipboard:error="onError">拨号</button>
@@ -82,7 +82,7 @@
 		},
 		mounted(){
 			store.state.whatBg = false
-			this.axios.get('https://vtmer.erienniu.xyz/api/leader')
+			this.axios.get(this.$store.state.backendUrl+'/api/leader')
 			.then(res=>{
 				this.list=res.data.data
 			})
@@ -94,6 +94,9 @@
 			copy(content){
 				this.message = content
 			},
+      call(content){
+        window.location.href = 'tel://'+content
+      },
 			onCopy: function (e) {
 				console.log('你刚刚复制: ' + e.text)
 			},

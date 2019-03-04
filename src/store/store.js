@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 const state={
+  backendUrl:"https://vtmer.com",
   whatBg:true,
   name:'',
   phone: 0,

@@ -81,7 +81,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
       login(){
         this.axios({
           method: 'post',
-          url: 'https://vtmer.erienniu.xyz/api/login/',
+          url: this.$store.state.backendUrl+'/api/login/',
           headers: {
             'Content-type': 'application/x-www-form-urlencoded'
           },

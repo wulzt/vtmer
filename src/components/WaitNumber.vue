@@ -75,7 +75,7 @@ export default{
     this.imageUrl = JSON.parse(storage.getItem('avatar'))
 
     let self = this
-    this.axios.get('https://vtmer.erienniu.xyz/api/check-queue')
+    this.axios.get(this.$store.state.backendUrl+'/api/check-queue')
       .then(function (res) {
         // handle success
         self.all = res.data.data.all
@@ -89,7 +89,7 @@ export default{
   methods:{
     waitRefresh(){
       let self = this
-      this.axios.get('https://vtmer.erienniu.xyz/api/check-queue')
+      this.axios.get(this.$store.state.backendUrl+'/api/check-queue')
         .then(function (res) {
           // handle success
           self.all = res.data.data.all
@@ -102,7 +102,7 @@ export default{
     },
     waitQuit(){
       let self = this
-      this.axios.get('https://vtmer.erienniu.xyz/api/queue-out')
+      this.axios.get(this.$store.state.backendUrl+'/api/queue-out')
         .then(function (res) {
           // handle success
           var storage=window.localStorage;

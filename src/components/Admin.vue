@@ -67,7 +67,7 @@ import store from '../store/store'
     mounted(){
       store.state.whatBg=false;
       store.state.editItem='';
-      this.axios.get('https://vtmer.erienniu.xyz/api/list')
+      this.axios.get(this.$store.state.backendUrl+'/api/list')
         .then(res => {
           // 成功回调
           this.worksList = res.data.data
@@ -94,7 +94,7 @@ import store from '../store/store'
         this.deleteId = this.worksList[index].id
       },
       dddddelete(){
-        this.axios.get('https://vtmer.erienniu.xyz/api/delete/'+this.deleteId)
+        this.axios.get(this.$store.state.backendUrl+'/api/delete/'+this.deleteId)
           .then(res => {
             // 成功回调
             this.isDelete=false

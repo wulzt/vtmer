@@ -5,10 +5,10 @@
     <div class="mask2" v-if="confirmClose == true||applyErr == true||applySuccess == true||CodeErr == true||sendCodeErr == true"></div>
     <div class="mainbody">
       <div class="upimg">
-
         <el-upload form="FupForm" id='upImg' name="avatar"
                    class="avatar-uploader"
-                   action="https://vtmer.erienniu.xyz/api/sign"
+                   :before-upload="beforeUpload"
+                   :action="uploadUrl"
                    :show-file-list="false"
                    :on-change="imgPreview"
                    :auto-upload="false">
@@ -208,14 +208,17 @@
     name: 'join',
     created(){
       store.state.whatBg=false;
+      this.uploadUrl = this.$store.state.backendUrl+"/api/sign"
+
     },
     data() {
+      this.uploadUrl;
       var checkContact = (rule,value,callbacks) => {
         if(!value){
           return callbacks(new Error('号码不能为空'));
           this.contactisTrue = false;
         }else{
-          const reg = /^1[3|4|5|7|8][0-9]\d{8}$/;
+          const reg = /^1[2-9][0-9]\d{8}$/;
           if(reg.test(value)){
             this.contactisTrue = true;
             callbacks();
@@ -287,12 +290,38 @@
       sendCodeWrong(){this.sendCodeErr = true},
       /*图片上传*/
       imgPreview(file){
-        const isLt2M = file.size / 1024 / 1024 < 2;
+        const isLt2M = file.size / 1024 / 1024 < 10;//预览改成10m，后面进行压缩
         if (!isLt2M) {
           this.$message.error('上传头像图片大小不能超过 2MB!');
         }
         this.file = file.raw;
         this.imageUrl = URL.createObjectURL(file.raw);
+      },
+      beforeUpload(file){
+        //对图片进行压缩
+        const imgSize = file.size / 1024 / 1024;
+        if(imgSize > 1) {
+          const _this = this;
+          return new Promise(resolve => {
+            const reader = new FileReader();
+            const image = new Image();
+            image.onload = (imageEvent) => {
+              const canvas = document.createElement('canvas');
+              const context = canvas.getContext('2d');
+              const width = image.width * _this.imgQuality
+              const height = image.height * _this.imgQuality
+              canvas.width = width;
+              canvas.height = height;
+              context.clearRect(0, 0, width, height);
+              context.drawImage(image, 0, 0, width, height);
+              const dataUrl = canvas.toDataURL(file.type);
+              const blobData = _this.dataURItoBlob(dataUrl, file.type);
+              resolve(blobData)
+            };
+            reader.onload = (e => { image.src = e.target.result; });
+            reader.readAsDataURL(file);
+          })
+        }
       },
       /*组别改变*/
       groupChange(){
@@ -327,7 +356,7 @@
         }
         upData.append("avatar",this.file);
         let self = this;
-        this.axios.post('https://vtmer.erienniu.xyz/api/sign', upData, {
+        this.axios.post(this.$store.state.backendUrl+'/api/sign', upData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
@@ -366,7 +395,7 @@
         phoneData.append('name',this.formLabelAlign.name);
         phoneData.append('mobile',this.formLabelAlign.contact);
         let self = this;
-        this.axios.post('https://vtmer.erienniu.xyz/api/sign-mobile',phoneData,{
+        this.axios.post(this.$store.state.backendUrl+'/api/sign-mobile',phoneData,{
           headers:{
             'Content-Type': 'multipart/form-data'
           }
@@ -421,7 +450,7 @@
         if(contactTxt == ''){
           this.contactisTrue = false;
         }else{
-          const reg = /^1[3|4|5|7|8][0-9]\d{8}$/;
+          const reg = /^1[2-9][0-9]\d{8}$/;
           if(reg.test(contactTxt)){
             this.contactisTrue = true;
           }else{

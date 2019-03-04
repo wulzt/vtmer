@@ -178,7 +178,7 @@ import store from '../store/store'
             store.state.group=this.groupId
             this.axios({
               method: 'post',
-              url: 'https://vtmer.erienniu.xyz/api/queue-in',
+              url: this.$store.state.backendUrl+'/api/queue-in',
               headers: {
                 'Content-type': 'multipart/form-data'
               },
@@ -200,7 +200,7 @@ import store from '../store/store'
                   }
 
                   this.isCheckSubmit = true
-                  this.axios.get('https://vtmer.erienniu.xyz/api/check-queue')
+                  this.axios.get(this.$store.state.backendUrl+'/api/check-queue')
                     .then(function (response) {
                       // handle success
                     })

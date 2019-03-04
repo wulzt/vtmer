@@ -63,7 +63,7 @@
     },
     mounted(){
       store.state.whatBg = false
-      axios.get('https://vtmer.erienniu.xyz/api/list')
+      axios.get(this.$store.state.backendUrl+'/api/list')
         .then(res=>{
           this.workslist = res.data.data
         })
