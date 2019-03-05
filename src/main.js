@@ -19,13 +19,15 @@ Vue.use(Loading.directive);
 
 Vue.prototype.$loading = Loading.service;
 
-import {Tabs,TabPane,Steps,Step,Row,Col} from 'element-ui';
+import {Tabs,TabPane,Steps,Step,Row,Col,Message} from 'element-ui';
 Vue.use(Tabs);
 Vue.use(TabPane);
 Vue.use(Steps);
 Vue.use(Step);
 Vue.use(Row);
 Vue.use(Col);
+
+Vue.prototype.$notification = Message;
 
 axios.defaults.withCredentials=true;
 Vue.prototype.axios = axios

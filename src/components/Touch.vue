@@ -1,6 +1,12 @@
 <template>
 	<div id="touch">
 		<Head></Head>
+    <transition name="notify">
+      <div v-if="copySuccess" class="successNotify"><p>复制成功</p></div>
+    </transition>
+    <transition name="notify">
+      <div v-if="copyError" class="errorNotify"><p>复制成功</p></div>
+    </transition>
 		<ul>
 			<li v-for="(item,index) in list" :key='index'>
 				<div class="linkmans">
@@ -76,6 +82,11 @@
 		},
 		data(){
 			return{
+        selfstyle: {
+          maxWidth: "50%",
+        },
+			  copySuccess:false,
+			  copyError:false,
 				list:[],
 				message:'',
 			}
@@ -92,16 +103,26 @@
 		},
 		methods:{
 			copy(content){
-				this.message = content
+				this.message = content;
 			},
       call(content){
         window.location.href = 'tel://'+content
       },
 			onCopy: function (e) {
-				console.log('你刚刚复制: ' + e.text)
+				console.log('你刚刚复制: ' + e.text);
+        this.copySuccess = true;
+        let that = this;
+        setTimeout(function () {
+          that.copySuccess = false
+        }, 2000)
 			},
 			onError: function (e) {
-				console.log('无法复制文本！')
+				console.log('无法复制文本！');
+        this.copyError = true;
+        let that = this;
+        setTimeout(function () {
+          that.copyError = false
+        }, 2000)
 			},
 			goHome(){
 				store.state.whatBg=true
@@ -158,14 +179,6 @@
     transition: all 250ms ease-in-out 0s;
     display: none;
     position: relative;
-  }
-  .overlay:hover
-  {
-    background-color: rgba(0,0,0,0.6);
-  }
-  .boxT:hover .overlay
-  {
-    display: block;
   }
   .overlay a
   {
@@ -296,4 +309,37 @@
 		color: #33d066;
 		border: 0.018rem solid #33d066;
 	}
+
+  .successNotify {
+    position: fixed;
+    right: 25%;
+    top: 45%;
+    width: 50%;
+    height: 8%;
+    background-color: rgba(129,167,253, 0.8);
+    color: #ffffff;
+    border-radius: 5px;
+    font-size: 0.4rem;
+    text-align: center;
+    line-height: 1.1rem;
+  }
+  .errorNotify {
+    position: fixed;
+    right: 25%;
+    top: 45%;
+    width: 50%;
+    height: 8%;
+    background-color: rgba(255,64,64, 0.8);
+    color: #ffffff;
+    border-radius: 5px;
+    font-size: 0.4rem;
+    text-align: center;
+  }
+
+  .notify-enter-active, .notify-leave-active {
+    transition: opacity .5s;
+  }
+  .notify-enter, .notify-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+  }
 </style>
