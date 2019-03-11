@@ -10,12 +10,12 @@
         <el-form-item label="姓名" prop="name" class="checkName">
           <el-input v-model="checkInForm.name"></el-input>
         </el-form-item>
-        <el-form-item label="性别" prop="sex" class="checkSex">
-          <el-radio-group v-model="checkInForm.sex">
-            <el-radio label="男"></el-radio>
-            <el-radio label="女"></el-radio>
-          </el-radio-group>
-        </el-form-item>
+        <!--<el-form-item label="性别" prop="sex" class="checkSex">-->
+          <!--<el-radio-group v-model="checkInForm.sex">-->
+            <!--<el-radio label="男"></el-radio>-->
+            <!--<el-radio label="女"></el-radio>-->
+          <!--</el-radio-group>-->
+        <!--</el-form-item>-->
         <el-form-item label="面试组别" prop="group" class="checkGroup">
           <el-radio-group v-model="checkInForm.group">
             <el-radio label="前端组"></el-radio>
@@ -29,7 +29,7 @@
         </el-form-item>
         <el-form-item class="checkBTN">
           <el-button type="primary" @click="submitForm('checkInForm')">签到</el-button>
-          <el-button @click="resetForm('checkInForm')">取消</el-button>
+          <!--<el-button @click="resetForm('checkInForm')">取消</el-button>-->
         </el-form-item>
       </el-form>
     </div>
@@ -178,7 +178,7 @@ import store from '../store/store'
             store.state.group=this.groupId
             this.axios({
               method: 'post',
-              url: this.$store.state.backendUrl+'/api/queue-in',
+              url: 'https://vtmer.erienniu.xyz/api/queue-in',
               headers: {
                 'Content-type': 'multipart/form-data'
               },
@@ -200,7 +200,7 @@ import store from '../store/store'
                   }
 
                   this.isCheckSubmit = true
-                  this.axios.get(this.$store.state.backendUrl+'/api/check-queue')
+                  this.axios.get('https://vtmer.erienniu.xyz/api/check-queue')
                     .then(function (response) {
                       // handle success
                     })

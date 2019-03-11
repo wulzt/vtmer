@@ -7,7 +7,6 @@
       <div class="upimg">
         <el-upload form="FupForm" id='upImg' name="avatar"
                    class="avatar-uploader"
-                   :before-upload="beforeUpload"
                    :action="uploadUrl"
                    :show-file-list="false"
                    :on-change="imgPreview"
@@ -290,7 +289,7 @@
       sendCodeWrong(){this.sendCodeErr = true},
       /*图片上传*/
       imgPreview(file){
-        const isLt2M = file.size / 1024 / 1024 < 10;//预览改成10m，后面进行压缩
+        const isLt2M = file.size / 1024 / 1024 < 5;//预览改成10m，后面进行压缩
         if (!isLt2M) {
           this.$message.error('上传头像图片大小不能超过 2MB!');
         }
@@ -308,14 +307,20 @@
             image.onload = (imageEvent) => {
               const canvas = document.createElement('canvas');
               const context = canvas.getContext('2d');
-              const width = image.width * _this.imgQuality
-              const height = image.height * _this.imgQuality
+              const width = image.width * 0.5;
+              const height = image.height * 0.5;
               canvas.width = width;
               canvas.height = height;
               context.clearRect(0, 0, width, height);
               context.drawImage(image, 0, 0, width, height);
               const dataUrl = canvas.toDataURL(file.type);
-              const blobData = _this.dataURItoBlob(dataUrl, file.type);
+
+              var binary = atob(dataUrl.split(',')[1]);
+              var array = [];
+              for(var i = 0; i < binary.length; i++) {
+                array.push(binary.charCodeAt(i));
+              }
+              const blobData = new Blob([new Uint8Array(array)], {type: file.type});
               resolve(blobData)
             };
             reader.onload = (e => { image.src = e.target.result; });

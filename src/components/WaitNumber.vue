@@ -61,8 +61,8 @@ export default{
   data(){
     return{
       name:'',
-      all:-1,
-      rank:-1,
+      all:1,
+      rank:0,
       isCheckCancel:false,
       imageUrl: '',
     }
@@ -75,7 +75,7 @@ export default{
     this.imageUrl = JSON.parse(storage.getItem('avatar'))
 
     let self = this
-    this.axios.get(this.$store.state.backendUrl+'/api/check-queue')
+    this.axios.get('https://vtmer.erienniu.xyz/api/check-queue')
       .then(function (res) {
         // handle success
         self.all = res.data.data.all
@@ -89,11 +89,20 @@ export default{
   methods:{
     waitRefresh(){
       let self = this
-      this.axios.get(this.$store.state.backendUrl+'/api/check-queue')
+      this.axios.get('https://vtmer.erienniu.xyz/api/check-queue')
         .then(function (res) {
+          if (res.data.status == 405){
+            self.$router.push({
+              path:'/interview',
+            })
+          }
           // handle success
           self.all = res.data.data.all
-          self.rank = res.data.data.rank
+          if (res.data.data.rank > 0){
+            self.rank = res.data.data.rank
+          }else{
+            self.rank = 0
+          }
         })
         .catch(function (error) {
           // handle error
@@ -102,7 +111,7 @@ export default{
     },
     waitQuit(){
       let self = this
-      this.axios.get(this.$store.state.backendUrl+'/api/queue-out')
+      this.axios.get('https://vtmer.erienniu.xyz/api/queue-out')
         .then(function (res) {
           // handle success
           var storage=window.localStorage;
